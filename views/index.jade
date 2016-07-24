@@ -1,16 +1,22 @@
-doctype html
-html(lang="en")
-    head
-        title= pageTitle
-        script(type='text/javascript').
-            if (foo) bar(1 + 5)
-    body
-        h1 Jade - node template engine
-        #container.col
-            if youAreUsingJade
-                p You are amazing
-            else
-                p Get on it!
-            p.
-                Jade is a terse and simple templating language with a
-                strong focus on performance and powerful features.
+extend layout
+block content
+    p
+        | Vivamus hendrerit arcu sed erat molestie
+        | vehicula. Sed auctor neque eu tellus
+        | rhoncus ut eleifend nibh porttitor. Ut in.
+    p
+        | Donec congue lacinia dui, a porttitor
+        | lectus condimentum laoreet. Nunc eu
+        | ullamcorper orci. Quisque eget odio ac
+        | lectus vestibulum faucibus eget in metus.
+        | In pellentesque faucibus vestibulum. Nulla
+        | at nulla justo, eget luctus tortor.
+block sidebar
+    .widget
+        h1 Widget
+        p
+            | Sed auctor neque eu tellus rhoncus ut
+            | eleifend nibh porttitor. Ut in nulla enim.
+        p
+            | Vivamus hendrerit arcu sed erat molestie
+            | vehicula.
