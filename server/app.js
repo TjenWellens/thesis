@@ -7,11 +7,12 @@ module.exports = function (config) {
   var app = express();
 
   app.set('view engine', 'jade');
+  app.set('views', config.path('app/views'));
 
   app.use(morgan('dev'));
 
   app.use(stylus.middleware({
-    src: config.path('stylesheets'),
+    src: config.path('app/stylesheets'),
     dest: config.path('public/stylesheets'),
     compile: compileStylus
   }));
