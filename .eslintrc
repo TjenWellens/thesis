@@ -8,7 +8,7 @@
     "no-undef": 2,
     "quotes": [2, "single", "avoid-escape"],
     "eqeqeq": 0,
-    "brace-style": [2, "stroustrup"],
+    "brace-style": [2, "1tbs"],
     "eol-last": 0,
     "no-nested-ternary": 1,
     "padded-blocks": [1, "never"],
