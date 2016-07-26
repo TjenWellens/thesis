@@ -3,6 +3,7 @@ html
     head
         title #{title} - My Site
         link(rel='stylesheet', href='css/bootstrap.min.css')
+        link(rel='stylesheet', href='stylesheets/style.css')
     body
         nav.navbar.navbar-inverse.navbar-fixed-top
             .container
@@ -13,25 +14,20 @@ html
                         span.icon-bar
                         span.icon-bar
                         span.icon-bar
-                    a.navbar-brand(href="#")
-                        | Project name
+                    a.navbar-brand(href="/")
+                        | Deliberate Practice
                 #navbar.collapse.navbar-collapse
                     ul.nav.navbar-nav
-                        li.active
-                            a(href="#")
-                                | Home
-                        li
-                            a(href="#about")
+                        li(class=page === 'test' ? 'active' : '')
+                            a(href="/test")
+                                | Test
+                        li(class=page === 'about' ? 'active' : '')
+                            a(href="/about")
                                 | About
-                        li
-                            a(href="#contact")
+                        li(class=page === 'contact' ? 'active' : '')
+                            a(href="/contact")
                                 | Contact
         .container
-            .main-content
-                block content
-            .sidebar
-                block sidebar
-        footer
-            p Running on node with Express, Jade and Stylus
+            block content
 
         script(src='js/bootstrap.min.js')

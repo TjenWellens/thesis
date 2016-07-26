@@ -19,9 +19,10 @@ module.exports = function (config) {
 
   app.use(express.static(config.path('public')));
 
-  app.get('/', function (req, res) {
-    res.render('index', {title: 'Home'});
-  });
+  app.get('/', render.index);
+  app.get('/test', render.test);
+  app.get('/about', render.about);
+  app.get('/contact', render.contact);
 
   return app;
 };
@@ -31,4 +32,19 @@ function compileStylus (str, path) {
     .set('filename', path)
     .set('compress', true)
     .use(nib());
+}
+
+var render = {
+  index: function (req, res) {
+    res.redirect('/test');
+  },
+  test: function (req, res) {
+    res.render('test', {page: 'test', title: 'Deliberate Practice Test'});
+  },
+  about: function (req, res) {
+    res.render('about', {page: 'about', title: 'About'});
+  },
+  contact: function (req, res) {
+    res.render('contact', {page: 'contact', title: 'Contact'});
+  },
 }
