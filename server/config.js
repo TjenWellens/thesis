@@ -9,11 +9,5 @@ module.exports = {
   },
   path: function (p) {
     return path.join(basedir, p || '.');
-  },
-  languages: {
-    'java': 'foo-java',
-    'javascript': 'foo-javascript',
-    'csharp': 'foo-c#',
-    'c': 'foo-c',
   }
 };

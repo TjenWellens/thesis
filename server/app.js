@@ -3,7 +3,7 @@ var morgan = require('morgan');
 var stylus = require('stylus');
 var nib = require('nib');
 
-module.exports = function (config) {
+module.exports = function (config, model) {
   var app = express();
 
   app.set('view engine', 'jade');
@@ -24,7 +24,7 @@ module.exports = function (config) {
   app.get('/about', render.about);
   app.get('/contact', render.contact);
 
-  require('./routes/api')(app, config);
+  require('./routes/api')(app, config, model);
 
   return app;
 };

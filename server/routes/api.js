@@ -1,13 +1,19 @@
-module.exports = function (app, config) {
-  var languages = config.languages;
+module.exports = function (app, config, model) {
 
   app.get('/api/code/:languageId', function (req, res, next) {
-    var languageId = req.params.languageId;
-    if (!languageId) next('Internal error: cannot read params');
+    var language = req.params.languageId;
+    if (!language) next('Internal error: cannot read params');
 
-    var language = languages[languageId]
-    if (!language) res.status(404).send('404 Language not found');
+    model.code.getSnippet(language, function (err, snippet) {
+      if (err) res.status(404).send('404 Language not found');
 
-    res.send(language);
+      res.send(snippet);
+    });
   });
-}
+
+  app.get('/api/code', function (req, res, next) {
+    model.code.getLanguages(function (err, languages) {
+      res.json(languages);
+    })
+  });
+};
