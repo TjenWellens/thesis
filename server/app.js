@@ -20,7 +20,7 @@ module.exports = function (config, model) {
   app.use(express.static(config.path('public')));
 
   app.get('/', render.index);
-  app.get('/test', render.test);
+  app.get('/experiment', render.experiment);
   app.get('/about', render.about);
   app.get('/contact', render.contact);
 
@@ -38,10 +38,10 @@ function compileStylus (str, path) {
 
 var render = {
   index: function (req, res) {
-    res.redirect('/test');
+    res.redirect('/experiment');
   },
-  test: function (req, res) {
-    res.render('test', {page: 'test', title: 'Deliberate Practice Test'});
+  experiment: function (req, res) {
+    res.render('experiment', {page: 'experiment', title: 'Deliberate Practice Test'});
   },
   about: function (req, res) {
     res.render('about', {page: 'about', title: 'About'});
