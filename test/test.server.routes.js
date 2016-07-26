@@ -30,6 +30,7 @@ describe('server routes', function () {
       supertest(app)
         .get(route)
         .expect(200)
+        .expect('Content-Type', /html/)
         .end(done);
     }
   });
@@ -39,5 +40,22 @@ describe('server routes', function () {
       .get('/stylesheets/style.css')
       .expect(200)
       .end(next);
+  });
+
+  describe('/api/code', function () {
+    it('/java should return html snippet', function (done) {
+      supertest(app)
+        .get('/api/code/java')
+        .expect(200)
+        .expect('Content-Type', /html/)
+        .end(done)
+    });
+
+    it('/foo should return 404', function (done) {
+      supertest(app)
+        .get('/api/code/foo')
+        .expect(404)
+        .end(done)
+    });
   });
 });

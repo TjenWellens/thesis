@@ -24,6 +24,8 @@ module.exports = function (config) {
   app.get('/about', render.about);
   app.get('/contact', render.contact);
 
+  require('./routes/api')(app, config);
+
   return app;
 };
 
