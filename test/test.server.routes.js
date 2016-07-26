@@ -28,17 +28,17 @@ before(function (done) {
 //endregion
 
 describe('server routes', function () {
-  it('/ should redirect to /test', function (next) {
+  it('/ should redirect to /experiment', function (next) {
     supertest(app)
       .get('/')
       .expect(302)
-      .expect('Location', '/test')
+      .expect('Location', '/experiment')
       .end(next);
   });
 
   describe('front-end routes', function () {
     var routes = [
-      '/test',
+      '/experiment',
       '/about',
       '/contact',
     ];
