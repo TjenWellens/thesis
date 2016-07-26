@@ -12,12 +12,13 @@ module.exports = function (config, model) {
   app.use(morgan('dev'));
 
   app.use(stylus.middleware({
-    src: config.path('app/stylesheets'),
-    dest: config.path('public/stylesheets'),
+    src: config.path('app/css'),
+    dest: config.path('app/dist/css'),
     compile: compileStylus
   }));
 
-  app.use(express.static(config.path('public')));
+  app.use(express.static(config.path('dist')));
+  app.use(express.static(config.path('static')));
 
   app.get('/', redirectExperiment);
   app.get('/experiment', render.experiment);

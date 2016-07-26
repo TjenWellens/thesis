@@ -58,9 +58,9 @@ describe('server routes', function () {
     }
   });
 
-  it('/stylesheets/style.css should exits', function (next) {
+  it('/css/style.css should exits', function (next) {
     supertest(app)
-      .get('/stylesheets/style.css')
+      .get('/css/style.css')
       .expect(200)
       .end(next);
   });
