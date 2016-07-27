@@ -17,8 +17,8 @@ module.exports = function (config, model) {
     compile: compileStylus
   }));
 
-  app.use(express.static(config.path('dist')));
-  app.use(express.static(config.path('static')));
+  app.use(express.static(config.path('app/dist')));
+  app.use(express.static(config.path('app/static')));
 
   app.get('/', redirectExperiment);
   app.get('/experiment', render.experiment);
