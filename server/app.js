@@ -2,14 +2,24 @@ var express = require('express');
 var morgan = require('morgan');
 var stylus = require('stylus');
 var nib = require('nib');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
 
 module.exports = function (config, model) {
   var app = express();
 
+  app.use(morgan('dev'));
+  app.use(cookieParser());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   app.set('view engine', 'jade');
   app.set('views', config.path('app/views'));
-
-  app.use(morgan('dev'));
 
   app.use(stylus.middleware({
     src: config.path('app/css'),
@@ -26,6 +36,13 @@ module.exports = function (config, model) {
   app.get('/contact', render.contact);
 
   require('./routes/api')(app, config, model);
+  require('./routes/login')(app, config, model);
+
+  // error handling
+  app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
 
   return app;
 };

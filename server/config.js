@@ -9,5 +9,12 @@ module.exports = {
   },
   path: function (p) {
     return path.join(basedir, p || '.');
+  },
+  auth: {
+    saltFactor: 10,
+    token: {
+      secret: process.env.TOKEN_SECRET || 'beepandboopandboopandbeep',
+      expires: 1440 // expires in 24 hours
+    }
   }
 };
