@@ -6,13 +6,13 @@ module.exports = function (app, config, model) {
 
   var localStrategy = new LocalStrategy(config.auth.localstrategy,
     function (req, email, password, done) {
-      if (!email)return done(null, false, {message: 'Email required'});
-      if (!password) return done(null, false, {message: 'Password required'});
+      if (!email)return done(null, false, req.flash('loginMessage', 'Email required'));
+      if (!password) return done(null, false, req.flash('loginMessage', 'Password required'));
 
       User.findOne({email: email}, function (err, user) {
         if (err)return done(err);
-        if (!user)return done(null, false, {message: 'Incorrect email'});
-        if (!user.comparePassword(password)) return done(null, false, {message: 'Incorrect password.'});
+        if (!user)return done(null, false, req.flash('loginMessage', 'Incorrect email'));
+        if (!user.comparePassword(password)) return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
 
         return done(null, user);
       });
@@ -20,12 +20,12 @@ module.exports = function (app, config, model) {
 
   var localSignup = new LocalStrategy(config.auth.localstrategy,
     function (req, email, password, done) {
-      if (!email)return done(null, false, {message: 'Email required'});
-      if (!password) return done(null, false, {message: 'Password required'});
+      if (!email)return done(null, false, req.flash('signupMessage', 'Email required'));
+      if (!password) return done(null, false, req.flash('signupMessage', 'Password required'));
 
       User.findOne({email: email}, function (err, user) {
         if (err)return done(err);
-        if (user)return done(null, false, req.flash('signupMessage', 'That email is already taken.');
+        if (user)return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
 
         var userData = {
           name: req.body.name,

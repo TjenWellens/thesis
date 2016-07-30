@@ -27,6 +27,8 @@ html
                         li(class=page === 'contact' ? 'active' : '')
                             a(href="/contact")
                                 | Contact
+        if message
+            .alert.alert-danger #{message}
         .container
             block content
 

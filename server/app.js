@@ -95,12 +95,14 @@ var render = {
     res.render('login', {
       page: 'login',
       title: 'Login',
+      message: req.flash('loginMessage'),
     });
   },
   register: function (req, res) {
     res.render('register', {
       page: 'register',
       title: 'Register',
+      message: req.flash('signupMessage'),
     });
   },
 };

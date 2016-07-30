@@ -82,7 +82,7 @@ describe('authentication', function () {
         .type('form')
         .send(user)
         .expect(302)
-        .expect('Location', '/login')
+        .expect('Location', '/signup')
         .end(done);
     });
   });
