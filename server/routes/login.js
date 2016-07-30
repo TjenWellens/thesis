@@ -18,7 +18,34 @@ module.exports = function (app, config, model) {
       });
     });
 
+  var localSignup = new LocalStrategy(config.auth.localstrategy,
+    function (req, email, password, done) {
+      if (!email)return done(null, false, {message: 'Email required'});
+      if (!password) return done(null, false, {message: 'Password required'});
+
+      User.findOne({email: email}, function (err, user) {
+        if (err)return done(err);
+        if (user)return done(null, false, req.flash('signupMessage', 'That email is already taken.');
+
+        var userData = {
+          name: req.body.name,
+          email: email,
+          password: password,
+          registeredOn: new Date(),
+        };
+
+        var user = new User(userData);
+        user.hashPassword();
+        user.save(function (err) {
+          if (err) return done(err);
+
+          return done(null, user);
+        });
+      });
+    });
+
   passport.use(localStrategy);
+  passport.use('local-signup', localSignup);
 
   passport.serializeUser(function (user, done) {
     done(null, user.id);
@@ -28,34 +55,12 @@ module.exports = function (app, config, model) {
     User.findById(id, done);
   });
 
-  app.post('/signup', function (req, res, next) {
-    var userData = {
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      registeredOn: new Date(),
-    };
-
-    if (!userData.email) return next({status: 'error', code: 401, message: 'email required'});
-    if (!userData.password) return next({status: 'error', code: 401, message: 'password required'});
-
-    // check if user exists already
-    User.findOne({email: userData.email}, function (err, existingUser) {
-      if (err) return next(err);
-      if (existingUser) return next({status: 'error', code: 401, message: 'Email address already used'});
-
-      var user = new User(userData);
-      user.hashPassword();
-      user.save(function (err) {
-        if (err) return next(err);
-
-        req.login(user, function (err) {
-          if (err) return next(err);
-          return res.redirect('/');
-        });
-      });
-    });
-  });
+  app.post('/signup', passport.authenticate('local-signup', {
+      successRedirect: '/',
+      failureRedirect: '/signup',
+      failureFlash: true
+    })
+  );
 
   app.post('/login', passport.authenticate('local', {
       successRedirect: '/',

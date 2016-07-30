@@ -74,18 +74,33 @@ function redirectExperiment (req, res) {
 
 var render = {
   experiment: function (req, res) {
-    res.render('experiment', {page: 'experiment', title: 'Deliberate Practice Test'});
+    res.render('experiment', {
+      page: 'experiment',
+      title: 'Deliberate Practice Test',
+    });
   },
   about: function (req, res) {
-    res.render('about', {page: 'about', title: 'About'});
+    res.render('about', {
+      page: 'about',
+      title: 'About',
+    });
   },
   contact: function (req, res) {
-    res.render('contact', {page: 'contact', title: 'Contact'});
+    res.render('contact', {
+      page: 'contact',
+      title: 'Contact',
+    });
   },
   login: function (req, res) {
-    res.render('login', {page: 'login', title: 'Login'});
+    res.render('login', {
+      page: 'login',
+      title: 'Login',
+    });
   },
   register: function (req, res) {
-    res.render('register', {page: 'register', title: 'Register'});
+    res.render('register', {
+      page: 'register',
+      title: 'Register',
+    });
   },
 };
