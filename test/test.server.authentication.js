@@ -33,12 +33,17 @@ describe('authentication', function () {
       email: 'tralala',
       password: 'bar'
     };
+    var token;
 
     before(function subscribe (done) {
       supertest(app)
         .post('/signup')
         .send(user)
         .expect(200)
+        .expect(function (res) {
+          expect(res.body).to.have.property('token');
+          token = res.body.token;
+        })
         .end(done);
     });
 
@@ -71,6 +76,18 @@ describe('authentication', function () {
         .post('/signup')
         .send(user)
         .expect(401)
+        .end(done);
+    });
+
+    it('should get user with token', function (done) {
+      supertest(app)
+        .get('/user')
+        .set('x-access-token', token)
+        .expect(200)
+        .expect(function (req) {
+          expect(req.body).to.have.property('email').to.equal(user.email);
+          expect(req.body).to.have.property('password').not.to.equal(user.password);
+        })
         .end(done);
     });
   });
