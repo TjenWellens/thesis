@@ -1,5 +1,6 @@
 var config = require('./server/config');
-var app = require('./server/app')(config);
+var model = require('./server/model');
+var app = require('./server/app')(config, model);
 
 // Start server
 app.listen(config.app.port, function () {

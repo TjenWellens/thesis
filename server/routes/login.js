@@ -36,6 +36,14 @@ module.exports = function (app, config, model) {
     });
   });
 
+  app.get('/user', function (req, res, next) {
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    User.getUserForToken(token, function (err, user) {
+      if(err) return next(err);
+      res.json(user);
+    });
+  });
+
   function sendToken (res, user) {
     // return the information including token as JSON
     res.json({
