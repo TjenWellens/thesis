@@ -29,6 +29,8 @@ module.exports = function (config, model) {
   app.get('/experiment', render.experiment);
   app.get('/about', render.about);
   app.get('/contact', render.contact);
+  app.get('/login', render.login);
+  app.get('/register', render.register);
 
   require('./routes/api')(app, config, model);
   require('./routes/login')(app, config, model);
@@ -72,4 +74,10 @@ var render = {
   contact: function (req, res) {
     res.render('contact', {page: 'contact', title: 'Contact'});
   },
-}
+  login: function (req, res) {
+    res.render('login', {page: 'login', title: 'Login'});
+  },
+  register: function (req, res) {
+    res.render('register', {page: 'register', title: 'Register'});
+  },
+};
