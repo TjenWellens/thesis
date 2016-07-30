@@ -14,7 +14,7 @@ module.exports = function (app, config, model) {
         if (!user)return done(null, false, req.flash('loginMessage', 'Incorrect email'));
         if (!user.comparePassword(password)) return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
 
-        return done(null, user);
+        done(null, user);
       });
     });
 
@@ -39,7 +39,7 @@ module.exports = function (app, config, model) {
         user.save(function (err) {
           if (err) return done(err);
 
-          return done(null, user);
+          done(null, user);
         });
       });
     });

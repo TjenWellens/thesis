@@ -38,7 +38,7 @@ module.exports = function (config, model) {
   app.get('/about', render.about);
   app.get('/contact', render.contact);
   app.get('/login', render.login);
-  app.get('/register', render.register);
+  app.get('/signup', render.signup);
 
   require('./routes/api')(app, config, model);
   require('./routes/login')(app, config, model);
@@ -98,10 +98,10 @@ var render = {
       message: req.flash('loginMessage'),
     });
   },
-  register: function (req, res) {
-    res.render('register', {
-      page: 'register',
-      title: 'Register',
+  signup: function (req, res) {
+    res.render('signup', {
+      page: 'signup',
+      title: 'Sign up',
       message: req.flash('signupMessage'),
     });
   },
