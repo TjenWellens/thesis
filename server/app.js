@@ -33,13 +33,7 @@ module.exports = function (config, model) {
   app.use(express.static(config.path('app/dist')));
   app.use(express.static(config.path('app/static')));
 
-  app.get('/', redirectExperiment);
-  app.get('/experiment', render.experiment);
-  app.get('/about', render.about);
-  app.get('/contact', render.contact);
-  app.get('/login', render.login);
-  app.get('/signup', render.signup);
-
+  require('./routes/pages')(app, config, model);
   require('./routes/api')(app, config, model);
   require('./routes/login')(app, config, model);
 
@@ -67,42 +61,3 @@ function compileStylus (str, path) {
     .set('compress', true)
     .use(nib());
 }
-
-function redirectExperiment (req, res) {
-  res.redirect('/experiment');
-}
-
-var render = {
-  experiment: function (req, res) {
-    res.render('experiment', {
-      page: 'experiment',
-      title: 'Deliberate Practice Test',
-    });
-  },
-  about: function (req, res) {
-    res.render('about', {
-      page: 'about',
-      title: 'About',
-    });
-  },
-  contact: function (req, res) {
-    res.render('contact', {
-      page: 'contact',
-      title: 'Contact',
-    });
-  },
-  login: function (req, res) {
-    res.render('login', {
-      page: 'login',
-      title: 'Login',
-      message: req.flash('loginMessage'),
-    });
-  },
-  signup: function (req, res) {
-    res.render('signup', {
-      page: 'signup',
-      title: 'Sign up',
-      message: req.flash('signupMessage'),
-    });
-  },
-};

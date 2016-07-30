@@ -41,6 +41,8 @@ describe('server routes', function () {
       '/experiment',
       '/about',
       '/contact',
+      '/login',
+      '/signup',
     ];
 
     for (var key in routes) {
