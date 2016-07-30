@@ -26,6 +26,7 @@ function User (userData) {
 }
 
 User.prototype.save = function (callback) {
+  this.token = users.length;
   users.push(this);
   callback(null);
 }
@@ -52,6 +53,9 @@ User.findOne = function (userData, callback) {
   return callback(null, null);
 }
 
+User.getUserForToken = function (token, done) {
+  done(null, users[token]);
+}
 
 module.exports = {
   user: User,
