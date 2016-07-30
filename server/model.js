@@ -27,11 +27,14 @@ function User (userData) {
   _.extend(this, userData, {token: users.length});
 }
 
-User.prototype.save = function (callback) {
-  this.token = users.length;
-  this._id = users.length;
-  users.push(this);
-  callback(null);
+User.prototype.save = function () {
+  var user = this;
+  return new Promise(function (resolve, reject) {
+    user.token = users.length;
+    user._id = users.length;
+    users.push(user);
+    resolve(user);
+  });
 }
 
 User.prototype.__defineGetter__('id', function () {
@@ -51,13 +54,15 @@ User.prototype.getToken = function () {
   return this.token;
 }
 
-User.findOne = function (userData, callback) {
-  _.find(users, function (user) {
-    if (_.isMatch(user, userData)) {
-      return callback(null, user);
-    }
-  });
-  return callback(null, null);
+User.findOne = function (userData) {
+  return new Promise(function (resolve, reject) {
+    _.find(users, function (user) {
+      if (_.isMatch(user, userData)) {
+        return resolve(user);
+      }
+    });
+    return resolve(null);
+  })
 }
 
 User.findById = function (id, done) {

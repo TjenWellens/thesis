@@ -9,13 +9,14 @@ module.exports = function (app, config, model) {
       if (!email)return done(null, false, req.flash('loginMessage', 'Email required'));
       if (!password) return done(null, false, req.flash('loginMessage', 'Password required'));
 
-      User.findOne({email: email}, function (err, user) {
-        if (err)return done(err);
-        if (!user)return done(null, false, req.flash('loginMessage', 'Incorrect email'));
-        if (!user.comparePassword(password)) return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
+      User.findOne({email: email})
+        .then(function (user) {
+          if (!user)return done(null, false, req.flash('loginMessage', 'Incorrect email'));
+          if (!user.comparePassword(password)) return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
 
-        done(null, user);
-      });
+          done(null, user);
+        })
+        .catch(done);
     });
 
   var localSignup = new LocalStrategy(config.auth.localstrategy,
@@ -23,25 +24,30 @@ module.exports = function (app, config, model) {
       if (!email)return done(null, false, req.flash('signupMessage', 'Email required'));
       if (!password) return done(null, false, req.flash('signupMessage', 'Password required'));
 
-      User.findOne({email: email}, function (err, user) {
-        if (err)return done(err);
-        if (user)return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+      User.findOne({email: email})
+        .then(function (user) {
+          if (user) return Promise.reject(false);
 
-        var userData = {
-          name: req.body.name,
-          email: email,
-          password: password,
-          registeredOn: new Date(),
-        };
-
-        var user = new User(userData);
-        user.hashPassword();
-        user.save(function (err) {
-          if (err) return done(err);
-
+          return new User({
+            name: req.body.name,
+            email: email,
+            password: password,
+            registeredOn: new Date(),
+          });
+        })
+        .then(function (user) {
+          return user.hashPassword();
+        })
+        .then(function (user) {
+          return user.save();
+        })
+        .then(function (user) {
           done(null, user);
+        })
+        .catch(function (err) {
+          if(err) done(err);
+          else done(null, false, req.flash('signupMessage', 'That email is already taken.'));
         });
-      });
     });
 
   passport.use(localStrategy);
