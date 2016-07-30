@@ -44,17 +44,20 @@ User.prototype.getToken = function () {
 }
 
 User.findOne = function (userData, callback) {
-  return _.find(users, function (user) {
+  _.find(users, function (user) {
     if (_.isMatch(user, userData)) {
       return callback(null, user);
     }
   });
-  return false;
+  return callback(null, null);
 }
 
 
 module.exports = {
   user: User,
+  clearUsers: function () {
+    users = [];
+  },
   code: {
     getSnippet: getSnippet,
     getLanguages: getLanguages

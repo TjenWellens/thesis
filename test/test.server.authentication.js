@@ -15,8 +15,7 @@ describe('authentication', function () {
 
     supertest(app)
       .post('/signup')
-      .field('email', user.email)
-      .field('password', user.password)
+      .send(user)
       .expect(200)
       .end(done);
   });
@@ -26,12 +25,19 @@ describe('authentication', function () {
       email: 'foo',
       password: 'bar'
     };
+    var incorrectPasswordUser = {
+      email: 'foo',
+      password: 'barra'
+    };
+    var nonExistingUser = {
+      email: 'tralala',
+      password: 'bar'
+    };
 
     before(function subscribe (done) {
       supertest(app)
         .post('/signup')
-        .field('email', user.email)
-        .field('password', user.password)
+        .send(user)
         .expect(200)
         .end(done);
     });
@@ -39,8 +45,7 @@ describe('authentication', function () {
     it('should be able to login', function (done) {
       supertest(app)
         .post('/login')
-        .field('email', user.email)
-        .field('password', user.password)
+        .send(user)
         .expect(200)
         .end(done);
     });
@@ -48,17 +53,23 @@ describe('authentication', function () {
     it('should not be able to login when login incorrect', function (done) {
       supertest(app)
         .post('/login')
-        .field('email', user.email)
-        .field('password', user.password)
+        .send(nonExistingUser)
         .expect(401)
         .end(done);
     });
 
-    it('should not be able to register when already exists', function (done) {
+    it('should not be able to login when password incorrect', function (done) {
+      supertest(app)
+        .post('/login')
+        .send(incorrectPasswordUser)
+        .expect(401)
+        .end(done);
+    });
+
+    it('should not be able to register twice', function (done) {
       supertest(app)
         .post('/signup')
-        .field('email', user.email)
-        .field('password', user.password)
+        .send(user)
         .expect(401)
         .end(done);
     });

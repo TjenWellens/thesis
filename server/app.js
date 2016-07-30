@@ -12,7 +12,7 @@ module.exports = function (config, model) {
 
   app.use(morgan('dev'));
   app.use(cookieParser());
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.urlencoded({extended: false}));
   app.use(bodyParser.json());
   app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
   app.use(passport.initialize());
@@ -39,9 +39,18 @@ module.exports = function (config, model) {
   require('./routes/login')(app, config, model);
 
   // error handling
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
+    var status = err.status || 'error';
+    var code = err.code || 500;
+    var message = err.message || 'Internal error';
+
+    console.error(err);
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    res.status(code).send({
+      status: status,
+      code: code,
+      message: message
+    });
   });
 
   return app;
