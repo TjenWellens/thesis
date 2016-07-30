@@ -20,6 +20,8 @@ function getLanguages (callback) {
 }
 
 var users = [];
+var pepper = 'foo';
+var salt = 'bar';
 
 function User (userData) {
   _.extend(this, userData, {token: users.length});
@@ -27,17 +29,22 @@ function User (userData) {
 
 User.prototype.save = function (callback) {
   this.token = users.length;
+  this._id = users.length;
   users.push(this);
   callback(null);
 }
 
+User.prototype.__defineGetter__('id', function () {
+  return '' + this._id;
+});
+
 User.prototype.hashPassword = function () {
-  this.password = this.password + '1';
+  this.password = pepper + this.password + salt;
   return this;
 }
 
 User.prototype.comparePassword = function (password) {
-  return password + '1' == this.password;
+  return this.password === pepper + password + salt;
 }
 
 User.prototype.getToken = function () {
@@ -51,6 +58,11 @@ User.findOne = function (userData, callback) {
     }
   });
   return callback(null, null);
+}
+
+User.findById = function (id, done) {
+  if (id >= users.length) return done('User does not exist');
+  done(null, users[id]);
 }
 
 User.getUserForToken = function (token, done) {

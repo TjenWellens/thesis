@@ -15,79 +15,74 @@ describe('authentication', function () {
 
     supertest(app)
       .post('/signup')
+      .type('form')
       .send(user)
-      .expect(200)
+      .expect(302)
+      .expect('Location', '/')
       .end(done);
   });
 
   describe('after signup', function () {
     var user = {
-      email: 'foo',
-      password: 'bar'
+      email: 'info@example.com',
+      password: 'pass1234pass'
     };
     var incorrectPasswordUser = {
-      email: 'foo',
-      password: 'barra'
+      email: 'info@example.com',
+      password: 'foo'
     };
     var nonExistingUser = {
-      email: 'tralala',
-      password: 'bar'
+      email: 'foo',
+      password: 'pass1234pass'
     };
-    var token;
 
     before(function subscribe (done) {
       supertest(app)
         .post('/signup')
+        .type('form')
         .send(user)
-        .expect(200)
-        .expect(function (res) {
-          expect(res.body).to.have.property('token');
-          token = res.body.token;
-        })
+        .expect(302)
+        .expect('Location', '/')
         .end(done);
     });
 
     it('should be able to login', function (done) {
       supertest(app)
         .post('/login')
+        .type('form')
         .send(user)
-        .expect(200)
+        .expect(302)
+        .expect('Location', '/')
         .end(done);
     });
 
     it('should not be able to login when login incorrect', function (done) {
       supertest(app)
         .post('/login')
+        .type('form')
         .send(nonExistingUser)
-        .expect(401)
+        .expect(302)
+        .expect('Location', '/login')
         .end(done);
     });
 
     it('should not be able to login when password incorrect', function (done) {
       supertest(app)
         .post('/login')
+        .type('form')
         .send(incorrectPasswordUser)
-        .expect(401)
+        .expect(302)
+        .expect('Location', '/login')
         .end(done);
     });
 
     it('should not be able to register twice', function (done) {
       supertest(app)
         .post('/signup')
+        .type('form')
         .send(user)
-        .expect(401)
-        .end(done);
-    });
-
-    it('should get user with token', function (done) {
-      supertest(app)
-        .get('/user')
-        .set('x-access-token', token)
-        .expect(200)
-        .expect(function (req) {
-          expect(req.body).to.have.property('email').to.equal(user.email);
-          expect(req.body).to.have.property('password').not.to.equal(user.password);
-        })
+        .expect(302)
+        .expect('Location', '/login')
         .end(done);
     });
   });

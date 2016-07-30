@@ -10,11 +10,17 @@ module.exports = {
   path: function (p) {
     return path.join(basedir, p || '.');
   },
+  session: {
+    secret: process.env.SESSION_SECRET || 'supernova',
+    saveUninitialized: true,
+    resave: true
+  },
   auth: {
     saltFactor: 10,
-    token: {
-      secret: process.env.TOKEN_SECRET || 'beepandboopandboopandbeep',
-      expires: 1440 // expires in 24 hours
-    }
+    localstrategy: {
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback : true,
+    },
   }
 };

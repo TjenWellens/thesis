@@ -1,5 +1,32 @@
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 module.exports = function (app, config, model) {
   var User = model.user;
+
+  var localStrategy = new LocalStrategy(config.auth.localstrategy,
+    function (req, email, password, done) {
+      if (!email)return done(null, false, {message: 'Email required'});
+      if (!password) return done(null, false, {message: 'Password required'});
+
+      User.findOne({email: email}, function (err, user) {
+        if (err)return done(err);
+        if (!user)return done(null, false, {message: 'Incorrect email'});
+        if (!user.comparePassword(password)) return done(null, false, {message: 'Incorrect password.'});
+
+        return done(null, user);
+      });
+    });
+
+  passport.use(localStrategy);
+
+  passport.serializeUser(function (user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, done);
+  });
 
   app.post('/signup', function (req, res, next) {
     var userData = {
@@ -10,7 +37,7 @@ module.exports = function (app, config, model) {
     };
 
     if (!userData.email) return next({status: 'error', code: 401, message: 'email required'});
-    if (!userData.email) return next({status: 'error', code: 401, message: 'password required'});
+    if (!userData.password) return next({status: 'error', code: 401, message: 'password required'});
 
     // check if user exists already
     User.findOne({email: userData.email}, function (err, existingUser) {
@@ -21,27 +48,25 @@ module.exports = function (app, config, model) {
       user.hashPassword();
       user.save(function (err) {
         if (err) return next(err);
-        sendToken(res, user);
+
+        req.login(user, function (err) {
+          if (err) return next(err);
+          return res.redirect('/');
+        });
       });
     });
   });
 
-  app.post('/login', function (req, res, next) {
-    User.findOne({email: req.body.email}, function (err, user) {
-      if (err) return next(err);
-      if (!user) return next({status: 'error', code: 401, message: 'Login failed'});
-      if (!user.comparePassword(req.body.password)) return next({status: 'error', code: 401, message: 'Login failed'});
-
-      sendToken(res, user);
-    });
-  });
+  app.post('/login', passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true
+    })
+  );
 
   app.get('/user', function (req, res, next) {
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    User.getUserForToken(token, function (err, user) {
-      if(err) return next(err);
-      res.json(user);
-    });
+    var user = req.user;
+    res.json(user);
   });
 
   function sendToken (res, user) {

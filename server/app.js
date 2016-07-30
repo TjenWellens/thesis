@@ -4,14 +4,22 @@ var stylus = require('stylus');
 var nib = require('nib');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
 
 module.exports = function (config, model) {
+  var User = model.user;
   var app = express();
 
   app.use(morgan('dev'));
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(bodyParser.json());
+  app.use(flash());
+  app.use(session(config.session));
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   app.set('view engine', 'jade');
   app.set('views', config.path('app/views'));
@@ -42,7 +50,7 @@ module.exports = function (config, model) {
     var message = err.message || 'Internal error';
 
     console.error(err);
-    console.error(err.stack);
+    err.stack && console.error(err.stack);
     res.status(code).send({
       status: status,
       code: code,
