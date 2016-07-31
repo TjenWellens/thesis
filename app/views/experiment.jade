@@ -2,15 +2,54 @@ extend layout
 block content
     .starter-template
         h1
-            | Do the test
-        p.lead
-            | Vivamus hendrerit arcu sed erat molestie
-            | vehicula. Sed auctor neque eu tellus
-            | rhoncus ut eleifend nibh porttitor. Ut in.
-        p
-            | Donec congue lacinia dui, a porttitor
-            | lectus condimentum laoreet. Nunc eu
-            | ullamcorper orci. Quisque eget odio ac
-            | lectus vestibulum faucibus eget in metus.
-            | In pellentesque faucibus vestibulum. Nulla
-            | at nulla justo, eget luctus tortor.
+            | Do the Experiment
+        form#experimentForm
+            #questions
+                p Some quick questions before the experiment begins:
+
+                label.sr-only(for='since') How long since you last did any programming
+                input#since.form-control(name="since", type='number', placeholder='How long since you last did any programming?', autofocus='')
+
+                label.sr-only(for='totalExperience') Total programming experience including education, hobby. (years)
+                input#totalExperience.form-control(name="totalExperience", type='number', placeholder='Total programming experience including education, hobby. (years)', required='')
+
+                label.sr-only(for='selectLanguage') Preferred programming language
+                select#selectLanguage.form-control(name="language")
+                    each language in languages
+                        option(value="language") #{language}
+
+                button#questionsDoneButton.btn.btn-lg.btn-primary.btn-block To the experiment!
+
+            #experiment
+                p#countdown
+                    | Time left:&nbsp;
+                    span #{showSnippetTime}
+
+                #pre-experiment
+                    p
+                        | You will see a code snippet in the language you selected
+                        | during #{showSnippetTime}. Then you will be asked to reproduce
+                        | the code snippet exactly. For this you will have #{inputSnippetTime}
+                    button#startButton.btn.btn-lg.btn-primary.btn-block Let's go!
+
+                #viewSnippet
+                    #code.code.noselect
+                        | Lorem ipsum dolor sit amet,
+                        | <br/>
+                        | consectetur adipiscing elit,
+                        | <br/>
+                        | sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                        | enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                        | nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                        | reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        | pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                        | culpa qui officia deserunt mollit anim id est laborum.
+
+                #inputSnippet
+                    textarea.code(form="experimentForm")
+
+
+
+
+block customScripts
+    script(src='js/bootstrap.min.js')

@@ -1,7 +1,6 @@
 var _ = require('underscore');
 
-var pages = [
-  {view: 'experiment', title: 'Deliberate Practice Test'},
+var standardPages = [
   {view: 'about', title: 'About'},
   {view: 'contact', title: 'Contact'},
   {view: 'login', title: 'Login'},
@@ -11,7 +10,23 @@ var pages = [
 module.exports = function (app, config, model) {
   app.get('/', redirectTo('/about'));
 
-  _.each(pages, function (page) {
+  app.get('/experiment', function (req, res, done) {
+    var Code = model.code;
+
+    Code.getLanguages(function (err, languages) {
+      if(err) return done(err);
+      res.render('experiment', {
+        page: 'experiment',
+        title: 'Deliberate Practice Experiment',
+        message: req.flash('experiment'),
+        languages: languages || [],
+        showSnippetTime: '3 minutes',
+        inputSnippetTime: '2 minutes',
+      });
+    });
+  });
+
+  _.each(standardPages, function (page) {
     app.get('/' + page.view, renderView(page));
   });
 };
