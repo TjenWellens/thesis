@@ -1,30 +1,7 @@
-var _ = require('underscore');
-
 var User = require('../test/models/user');
-
-var languages = {
-  'java': 'foo-java',
-  'javascript': 'foo-javascript',
-  'csharp': 'foo-c#',
-  'c': 'foo-c',
-};
-
-function getSnippet (language, callback) {
-  var snippet = languages[language];
-
-  if (!snippet) return callback('Unknown language: ' + language);
-
-  return callback(null, snippet);
-}
-
-function getLanguages (callback) {
-  return callback(null, _.keys(languages));
-}
+var Code = require('../test/models/code');
 
 module.exports = {
   user: User,
-  code: {
-    getSnippet: getSnippet,
-    getLanguages: getLanguages
-  }
+  code: Code
 };
