@@ -31,6 +31,11 @@ module.exports = function (app, config, model) {
     console.log(req.body);
   });
 
+  app.get('/user', function (req, res, next) {
+    var user = req.user;
+    res.json(user);
+  });
+
   _.each(standardPages, function (page) {
     app.get('/' + page.view, renderView(page));
   });

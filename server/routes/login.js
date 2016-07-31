@@ -10,9 +10,4 @@ module.exports = function (app, config, model) {
   passport.deserializeUser(function (id, done) {
     User.findById(id, done);
   });
-
-  app.get('/user', function (req, res, next) {
-    var user = req.user;
-    res.json(user);
-  });
 };
