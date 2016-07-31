@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 var config = require('./server/config');
-var model = require('./test/models');
+var model = require('./test/models/models');
 var app = require('./server/app')(config, model);
 
 // Start server
