@@ -8,10 +8,12 @@ var standardPages = [
 ];
 
 module.exports = function (app, config, model) {
+  var Code = model.code;
+  var Experiment = model.experiment;
+
   app.get('/', redirectTo('/about'));
 
   app.get('/experiment', function (req, res, done) {
-    var Code = model.code;
 
     Code.getLanguages()
       .then(function (languages) {
@@ -28,12 +30,25 @@ module.exports = function (app, config, model) {
   });
 
   app.post('/experiment', function (req, res, done) {
-    console.log(req.body);
+    new Experiment(_.extend({}, req.body, {userId: req.user.id}))
+      .save()
+      .then(function () {
+        res.redirect('/user/experiment');
+      })
+      .catch(done);
   });
 
   app.get('/user', function (req, res, next) {
     var user = req.user;
     res.json(user);
+  });
+
+  app.get('/user/experiment', function (req, res, next) {
+    Experiment.findOne({userId: req.user.id})
+      .then(function (experiment) {
+        res.json(experiment);
+      })
+      .catch(next);
   });
 
   _.each(standardPages, function (page) {

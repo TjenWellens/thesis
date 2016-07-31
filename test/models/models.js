@@ -3,6 +3,7 @@ var path = require('path');
 
 var User = require('./user');
 var Code = require('./code');
+var Experiment = require('./experiment');
 
 Code.seed(path.join(__dirname, 'languages.json'));
 
@@ -13,5 +14,6 @@ _.each(Code._all, function (snippet) {
 
 module.exports = {
   user: User,
-  code: Code
+  code: Code,
+  experiment: Experiment
 };
