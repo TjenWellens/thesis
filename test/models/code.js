@@ -3,6 +3,13 @@ var createModel = require('../../util/create-base-model');
 
 var Code = createModel();
 
+Code.prototype.calculatExtraProperties = function () {
+  this.rows = this.code.length;
+  this.cols = _.reduce(this.code, function (memo, line) {
+    return Math.max(memo, line.length);
+  }, 0);
+}
+
 Code.getSnippet = function (language) {
   return Code.findOne({language: language});
 }

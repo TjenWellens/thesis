@@ -1,7 +1,7 @@
 /* global $:false */
 $(document).ready(function () {
   // listen to changes of selected language
-  $('#selectLanguage').change(refreshCodeSnippet());
+  $('#selectLanguage').change(refreshCodeSnippet);
 
   // load default language
   refreshCodeSnippet();
