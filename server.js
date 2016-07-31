@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var config = require('./server/config');
 var model = require('./server/model');
 var app = require('./server/app')(config, model);

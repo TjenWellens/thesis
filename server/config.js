@@ -2,7 +2,7 @@ var path = require('path');
 
 var basedir = path.join(__dirname, '../');
 
-module.exports = {
+var config = {
   app: {
     port: process.env.PORT || 8080,
     name: 'Deliberate Experiment'
@@ -15,12 +15,20 @@ module.exports = {
     saveUninitialized: true,
     resave: true
   },
-  auth: {
-    saltFactor: 10,
-    localstrategy: {
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback : true,
-    },
-  }
 };
+
+config.auth = {
+  saltFactor: 10,
+  localstrategy: {
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true,
+  },
+  twitter: {
+    consumerKey: process.env.TWITTER_CONSUMER_KEY || '',
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET || '',
+    callbackURL: 'http://experiment.tjenwellens.eu:' + config.app.port + '/login/twitter/return',
+  },
+};
+
+module.exports = config;
