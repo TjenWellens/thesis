@@ -11,6 +11,10 @@ module.exports = function () {
 
   Model._all = all;
 
+  Model.prototype.__defineGetter__('id', function () {
+    return '' + this._id;
+  });
+
   Model.prototype.save = function () {
     var model = this;
     return new Promise(function (resolve, reject) {

@@ -1,7 +1,6 @@
 var _ = require('underscore');
 var createModel = require('../../util/create-base-model');
 
-
 var Code = createModel();
 
 Code.getSnippet = function (language) {
