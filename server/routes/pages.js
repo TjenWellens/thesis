@@ -9,7 +9,7 @@ var pages = [
 ];
 
 module.exports = function (app, config, model) {
-  app.get('/', redirectTo('/experiment'));
+  app.get('/', redirectTo('/about'));
 
   _.each(pages, function (page) {
     app.get('/' + page.view, renderView(page));
