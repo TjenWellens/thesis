@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var auth = require('../middleware/auth-redirect-login');
 
 var standardPages = [
   {view: 'about', title: 'About'},
@@ -13,7 +14,7 @@ module.exports = function (app, config, model) {
 
   app.get('/', redirectTo('/about'));
 
-  app.get('/experiment', function (req, res, done) {
+  app.get('/experiment', auth, function (req, res, done) {
 
     Code.getLanguages()
       .then(function (languages) {
@@ -55,13 +56,13 @@ module.exports = function (app, config, model) {
       .catch(done);
   });
 
-  app.get('/user', function (req, res, next) {
+  app.get('/user', auth, function (req, res, next) {
     console.log(req);
     var user = req.user;
     res.json(user);
   });
 
-  app.get('/user/experiment', function (req, res, next) {
+  app.get('/user/experiment', auth, function (req, res, next) {
     Experiment.findOne({user: {id: req.user.id}})
       .then(function (experiment) {
         res.json(experiment);
