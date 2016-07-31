@@ -19,7 +19,7 @@ module.exports = function (app, config, model) {
       //region Helper Functions
       function failIfUserDoesNotExists (user) {
         if (!user) {
-          done(null, false, req.flash('signup', 'That email is already taken.'));
+          done(null, false, req.flash('signup', 'That email does not exist'));
           return Promise.reject(null);
         }
         return user;
