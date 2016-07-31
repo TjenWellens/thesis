@@ -1,6 +1,6 @@
 /* global $:false */
 $(document).ready(function () {
-  var viewTime = 7;
+  var viewTime = 2;
   var inputTime = 5;
 
   // listen to changes of selected language
@@ -39,6 +39,10 @@ $(document).ready(function () {
   }
 
   function endExperiment () {
+    // disable textarea
+    $('#codeInput').attr('readonly', 'readonly');
+
+    // post form
     $('#experimentForm').submit();
   }
 
