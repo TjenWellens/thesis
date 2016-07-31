@@ -10,7 +10,7 @@ var Code = model.code;
 
 var DATA = {
   languages: ['java', 'javascript', 'csharp', 'c'],
-  javaSnippet: {language: 'java', code: 'foo-java'}
+  javaSnippet: JSON.parse('{"language": "java", "code": ["foo-java"]}')
 };
 
 describe('server routes', function () {

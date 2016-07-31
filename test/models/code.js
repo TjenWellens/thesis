@@ -1,11 +1,8 @@
 var _ = require('underscore');
+var path = require('path');
+var readFile = require('../../util/read-file');
 
-var languages = [
-  {language: 'java', code: 'foo-java'},
-  {language: 'javascript', code: 'foo-javascript'},
-  {language: 'csharp', code: 'foo-c#'},
-  {language: 'c', code: 'foo-c'},
-];
+var LANGUAGES = JSON.parse(readFile(path.join(__dirname, 'languages.json'), 'utf8'));
 
 var snippets = [];
 
@@ -24,7 +21,7 @@ Code.prototype.save = function () {
 
 Code.findOne = function (searchData) {
   return new Promise(function (resolve, reject) {
-    var matchingItem = _.find(languages, function (user) {
+    var matchingItem = _.find(LANGUAGES, function (user) {
       return deepMatch(user, searchData);
     });
     return resolve(matchingItem);
@@ -57,7 +54,7 @@ Code.getSnippet = function (language) {
 
 Code.getLanguages = function () {
   return new Promise(function (resolve, reject) {
-    return resolve(_.map(languages, function (snippet) {
+    return resolve(_.map(LANGUAGES, function (snippet) {
       return snippet.language;
     }));
   });

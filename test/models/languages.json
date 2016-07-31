@@ -1,0 +1,6 @@
+[
+  {"language": "java", "code": ["foo-java"]},
+  {"language": "javascript", "code": ["foo-javascript"]},
+  {"language": "csharp", "code": ["foo-c#"]},
+  {"language": "c", "code": ["foo-c"]}
+]

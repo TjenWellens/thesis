@@ -15,7 +15,7 @@ block content
 
                 label.sr-only(for='selectLanguage') Preferred programming language
                 select#selectLanguage.form-control(name="language")
-                    each language in languages
+                    each language in LANGUAGES
                         option(value="language") #{language}
 
                 button#questionsDoneButton.btn.btn-lg.btn-primary.btn-block To the experiment!
