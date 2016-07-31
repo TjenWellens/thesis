@@ -1,31 +1,49 @@
 var passport = require('passport');
+var bcrypt = require('bcrypt');
 var LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function (app, config, model) {
   var User = model.user;
 
-  var localStrategy = new LocalStrategy(config.auth.localstrategy,
+  var util = {
+    hashPassword: function (password) {
+      return bcrypt.hashSync(password, bcrypt.genSaltSync(config.auth.saltFactor), null);
+    },
+    comparePassword: function (password, hash) {
+      return bcrypt.compareSync(password, hash);
+    },
+  }
+
+  var loginStrategy = new LocalStrategy(config.auth.localstrategy,
     function (req, email, password, done) {
       if (!email)return done(null, false, req.flash('login', 'Email required'));
       if (!password) return done(null, false, req.flash('login', 'Password required'));
 
-      User.findOne({email: email})
+      var searchData = {
+        provider: 'local',
+        local: {
+          email: email,
+        }
+      };
+
+      User.findOne(searchData)
         .then(failIfUserDoesNotExists)
-        .then(comparePassword)
+        .then(checkPassword)
         .then(success)
         .catch(doneIfError);
 
       //region Helper Functions
       function failIfUserDoesNotExists (user) {
         if (!user) {
+          console.log('login failed: email does not exist')
           done(null, false, req.flash('signup', 'That email does not exist'));
           return Promise.reject(null);
         }
         return user;
       }
 
-      function comparePassword (user) {
-        if (!user.comparePassword(password)) {
+      function checkPassword (user) {
+        if (!util.comparePassword(password, user.local.password)) {
           done(null, false, req.flash('login', 'Incorrect password.'));
           return Promise.reject(null);
         }
@@ -42,24 +60,26 @@ module.exports = function (app, config, model) {
       //endregion
     });
 
-  var localSignup = new LocalStrategy(config.auth.localstrategy,
+  var signupStrategy = new LocalStrategy(config.auth.localstrategy,
     function (req, email, password, done) {
       if (!email)return done(null, false, req.flash('signup', 'Email required'));
       if (!password) return done(null, false, req.flash('signup', 'Password required'));
 
-      User.findOne({email: email})
+      var searchData = {
+        provider: 'local',
+        local: {
+          email: email,
+        }
+      };
+
+      User.findOne(searchData)
         .then(failIfUserExists)
-        .then(createNewUserFromReqBody)
-        .then(hashPassword)
+        .then(createNewUser)
         .then(save)
         .then(success)
         .catch(doneIfError);
 
       //region Helper Functions
-      function hashPassword (user) {
-        return user.hashPassword();
-      }
-
       function save (user) {
         return user.save();
       }
@@ -68,12 +88,15 @@ module.exports = function (app, config, model) {
         done(null, user);
       }
 
-      function createNewUserFromReqBody () {
+      function createNewUser () {
         return new User({
+          provider: 'local',
           name: req.body.name,
-          email: email,
-          password: password,
-          registeredOn: new Date(),
+          local: {
+            email: email,
+            password: util.hashPassword(password),
+            registeredOn: new Date(),
+          }
         });
       }
 
@@ -90,8 +113,8 @@ module.exports = function (app, config, model) {
       //endregion
     });
 
-  passport.use(localStrategy);
-  passport.use('local-signup', localSignup);
+  passport.use(loginStrategy);
+  passport.use('local-signup', signupStrategy);
 
   app.post('/signup', passport.authenticate('local-signup', {
       successRedirect: '/',
