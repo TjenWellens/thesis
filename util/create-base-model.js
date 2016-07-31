@@ -3,13 +3,11 @@ var readFile = require('./read-file');
 var deepMatch = require('./deep-match');
 
 module.exports = function () {
-  var all = [];
-
   function Model (data) {
     _.extend(this, data);
   }
 
-  Model._all = all;
+  Model._all = [];
 
   Model.prototype.__defineGetter__('id', function () {
     return '' + this._id;
@@ -18,15 +16,15 @@ module.exports = function () {
   Model.prototype.save = function () {
     var model = this;
     return new Promise(function (resolve, reject) {
-      model._id = all.length;
-      all.push(model);
+      model._id = Model._all.length;
+      Model._all.push(model);
       resolve(model);
     });
   }
 
   Model.findOne = function (searchData) {
     return new Promise(function (resolve, reject) {
-      var matchingItem = _.find(all, function (model) {
+      var matchingItem = _.find(Model._all, function (model) {
         return deepMatch(model, searchData);
       });
       return resolve(matchingItem);
@@ -41,8 +39,8 @@ module.exports = function () {
   }
 
   Model.findById = function (id, done) {
-    if (id >= all.length) return done('Model does not exist');
-    done(null, all[id]);
+    if (id >= Model._all.length) return done('Model does not exist');
+    done(null, Model._all[id]);
   }
 
   return Model;
