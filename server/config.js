@@ -25,8 +25,8 @@ config.auth = {
     passReqToCallback: true,
   },
   twitter: {
-    consumerKey: process.env.TWITTER_CONSUMER_KEY || '',
-    consumerSecret: process.env.TWITTER_CONSUMER_SECRET || '',
+    consumerKey: process.env.TWITTER_CONSUMER_KEY || 'foo',
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET || 'bar',
     callbackURL: 'http://experiment.tjenwellens.eu:' + config.app.port + '/login/twitter/return',
   },
 };

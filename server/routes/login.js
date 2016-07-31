@@ -11,13 +11,36 @@ module.exports = function (app, config, model) {
       if (!password) return done(null, false, req.flash('login', 'Password required'));
 
       User.findOne({email: email})
-        .then(function (user) {
-          if (!user)return done(null, false, req.flash('login', 'Incorrect email'));
-          if (!user.comparePassword(password)) return done(null, false, req.flash('login', 'Incorrect password.'));
+        .then(failIfUserDoesNotExists)
+        .then(comparePassword)
+        .then(success)
+        .catch(doneIfError);
 
-          done(null, user);
-        })
-        .catch(done);
+      //region Helper Functions
+      function failIfUserDoesNotExists (user) {
+        if (!user) {
+          done(null, false, req.flash('signup', 'That email is already taken.'));
+          return Promise.reject(null);
+        }
+        return user;
+      }
+
+      function comparePassword (user) {
+        if (!user.comparePassword(password)) {
+          done(null, false, req.flash('login', 'Incorrect password.'));
+          return Promise.reject(null);
+        }
+        return user;
+      }
+
+      function success (user) {
+        done(null, user);
+      }
+
+      function doneIfError (err) {
+        if (err) done(err);
+      };
+      //endregion
     });
 
   var localSignup = new LocalStrategy(config.auth.localstrategy,
