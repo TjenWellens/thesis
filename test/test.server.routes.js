@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var _ = require('underscore');
 
 var config = require('../server/config');
-var model = require('./model');
+var model = require('./models');
 var app = require('../server/app')(config, model);
 
 var Code = model.code;
