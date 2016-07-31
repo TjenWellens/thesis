@@ -1,5 +1,4 @@
 var _ = require('underscore');
-var path = require('path');
 var readFile = require('../../util/read-file');
 
 var snippets = [];
@@ -58,13 +57,11 @@ Code.getLanguages = function () {
   });
 }
 
-function seed (file) {
+Code.seed = function (file) {
   var snippets = JSON.parse(readFile(file, 'utf8'));
   _.each(snippets, function (snippet) {
     new Code(snippet).save();
   });
 }
-
-seed(path.join(__dirname, 'languages.json'));
 
 module.exports = Code;
