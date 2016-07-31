@@ -1,6 +1,13 @@
 [
   {"language": "java", "code": ["foo-java"]},
   {"language": "javascript", "code": ["foo-javascript"]},
-  {"language": "csharp", "code": ["foo-c#"]},
+  {
+    "language": "csharp", "code": [
+    "foo-1/4",
+    "foo-2/4",
+    "foo-3/4",
+    "foo-4/4"
+  ]
+  },
   {"language": "c", "code": ["foo-c"]}
 ]

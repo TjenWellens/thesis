@@ -67,8 +67,9 @@ describe('server routes', function () {
         .get('/api/code/java')
         .expect(200)
         .expect(function (res) {
-          expect(res.body).have.property('language').to.be.a('string');
-          expect(res.body).have.property('code').to.be.an('array');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).have.property('language').to.be.a('string');
+          expect(res.body.data).have.property('code').to.be.an('array');
         })
         .expect('Content-Type', /json/)
         .end(done)
