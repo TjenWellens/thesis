@@ -20,8 +20,8 @@ module.exports = function (app, config, model) {
           title: 'Deliberate Practice Experiment',
           message: req.flash('experiment'),
           languages: languages || [],
-          showSnippetTime: '3 minutes',
-          inputSnippetTime: '2 minutes',
+          showSnippetTime: '3:00',
+          inputSnippetTime: '2:00',
         });
       })
       .catch(done);

@@ -3,7 +3,7 @@ block content
     .starter-template
         h1
             | Do the Experiment
-        form#experimentForm
+        form#experimentForm(method="POST")
             #questions
                 p Some quick questions before the experiment begins:
 
@@ -18,24 +18,25 @@ block content
                     each language in languages
                         option(value=language) #{language}
 
-                button#questionsDoneButton.btn.btn-lg.btn-primary.btn-block To the experiment!
+                button#questionsDoneButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") To the experiment!
 
-            #experiment
-                p#countdown
+            #experiment(style="display:none;")
+                p
                     | Time left:&nbsp;
-                    span #{showSnippetTime}
+                    span#countdown #{showSnippetTime}
+                    | &nbsp;minutes
 
-                #pre-experiment
+                #preExperiment
                     p
                         | You will see a code snippet in the language you selected
                         | during #{showSnippetTime}. Then you will be asked to reproduce
                         | the code snippet exactly. For this you will have #{inputSnippetTime}
-                    button#startButton.btn.btn-lg.btn-primary.btn-block Let's go!
+                    button#startButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") Let's go!
 
-                #viewSnippet
+                #viewSnippet(style="display:none;")
                     #code.code.noselect
 
-                #inputSnippet
+                #inputSnippet(style="display:none;")
                     textarea#codeInput.code(form="experimentForm")
 
 
