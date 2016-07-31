@@ -29,6 +29,11 @@ config.auth = {
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET || 'bar',
     callbackURL: 'http://experiment.tjenwellens.eu:' + config.app.port + '/login/twitter/return',
   },
+  google: {
+    clientID: process.env.GOOGLE_CLIENT_ID || 'foo',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'bar',
+    callbackURL: 'http://experiment.tjenwellens.eu:' + config.app.port + '/login/google/return',
+  },
 };
 
 module.exports = config;

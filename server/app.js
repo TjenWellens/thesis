@@ -37,6 +37,7 @@ module.exports = function (config, model) {
   require('./routes/api')(app, config, model);
   require('./routes/auth.local')(app, config, model);
   require('./routes/auth.twitter')(app, config, model);
+  require('./routes/auth.google')(app, config, model);
   require('./routes/login')(app, config, model);
 
   // error handling
