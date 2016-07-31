@@ -28,6 +28,7 @@ $(document).ready(function () {
       }
 
       insertSnippet($code, jsend.data);
+      updateSize($('#codeInput'), jsend.data);
     });
   }
 
@@ -35,5 +36,10 @@ $(document).ready(function () {
     var lines = snippet.code;
     var code = '<p>' + lines.join('<br>') + '</p>';
     element.html(code);
+  }
+
+  function updateSize (element, snippet) {
+    element.attr('rows', snippet.rows);
+    element.attr('cols', snippet.cols);
   }
 });
