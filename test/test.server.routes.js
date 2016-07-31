@@ -6,33 +6,19 @@ var config = require('../server/config');
 var model = require('./model');
 var app = require('../server/app')(config, model);
 
+var Code = model.code;
+
 var DATA = {
-  languages: null,
-  javaSnippet: null
+  languages: ['java', 'javascript', 'csharp', 'c'],
+  javaSnippet: {language: 'java', code: 'foo-java'}
 };
 
-//region load DATA
-before(function (done) {
-  model.code.getLanguages(function (err, languages) {
-    DATA.languages = languages;
-    done();
-  });
-});
-
-before(function (done) {
-  model.code.getSnippet('java', function (err, snippet) {
-    DATA.javaSnippet = snippet;
-    done();
-  });
-});
-//endregion
-
 describe('server routes', function () {
-  it('/ should redirect to /experiment', function (next) {
+  it('/ should redirect to /about', function (next) {
     supertest(app)
       .get('/')
       .expect(302)
-      .expect('Location', '/experiment')
+      .expect('Location', '/about')
       .end(next);
   });
 
@@ -81,7 +67,7 @@ describe('server routes', function () {
         .get('/api/code/java')
         .expect(200)
         .expect(DATA.javaSnippet)
-        .expect('Content-Type', /html/)
+        .expect('Content-Type', /json/)
         .end(done)
     });
 

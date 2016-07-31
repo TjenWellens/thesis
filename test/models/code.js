@@ -1,25 +1,66 @@
 var _ = require('underscore');
 
-var languages = {
-  'java': 'foo-java',
-  'javascript': 'foo-javascript',
-  'csharp': 'foo-c#',
-  'c': 'foo-c',
-};
+var languages = [
+  {language: 'java', code: 'foo-java'},
+  {language: 'javascript', code: 'foo-javascript'},
+  {language: 'csharp', code: 'foo-c#'},
+  {language: 'c', code: 'foo-c'},
+];
 
-function getSnippet (language, callback) {
-  var snippet = languages[language];
+var snippets = [];
 
-  if (!snippet) return callback('Unknown language: ' + language);
-
-  return callback(null, snippet);
+function Code (data) {
+  _.extend(this, data);
 }
 
-function getLanguages (callback) {
-  return callback(null, _.keys(languages));
+Code.prototype.save = function () {
+  var snippet = this;
+  return new Promise(function (resolve, reject) {
+    snippet._id = snippets.length;
+    snippets.push(snippet);
+    resolve(snippet);
+  });
 }
 
-module.exports = {
-  getSnippet: getSnippet,
-  getLanguages: getLanguages
+Code.findOne = function (searchData) {
+  return new Promise(function (resolve, reject) {
+    var matchingItem = _.find(languages, function (user) {
+      return deepMatch(user, searchData);
+    });
+    return resolve(matchingItem);
+  })
+
+  function deepMatch (source, subset) {
+    for (var prop in subset) {
+      // source must contain all properties subset contains
+      if (!(prop in source))
+        return false;
+
+      // property is object -> recurse
+      if (typeof subset[prop] === 'object') {
+        if (!deepMatch(source[prop], subset[prop]))
+          return false;
+      }
+      // property is not object -> must be equal
+      else if (source[prop] !== subset[prop])
+        return false;
+    }
+    return true;
+  }
 }
+
+Code._all = snippets;
+
+Code.getSnippet = function (language) {
+  return Code.findOne({language: language});
+}
+
+Code.getLanguages = function () {
+  return new Promise(function (resolve, reject) {
+    return resolve(_.map(languages, function (snippet) {
+      return snippet.language;
+    }));
+  });
+}
+
+module.exports = Code;

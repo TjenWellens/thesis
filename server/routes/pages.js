@@ -13,17 +13,18 @@ module.exports = function (app, config, model) {
   app.get('/experiment', function (req, res, done) {
     var Code = model.code;
 
-    Code.getLanguages(function (err, languages) {
-      if(err) return done(err);
-      res.render('experiment', {
-        page: 'experiment',
-        title: 'Deliberate Practice Experiment',
-        message: req.flash('experiment'),
-        languages: languages || [],
-        showSnippetTime: '3 minutes',
-        inputSnippetTime: '2 minutes',
-      });
-    });
+    Code.getLanguages()
+      .then(function (languages) {
+        res.render('experiment', {
+          page: 'experiment',
+          title: 'Deliberate Practice Experiment',
+          message: req.flash('experiment'),
+          languages: languages || [],
+          showSnippetTime: '3 minutes',
+          inputSnippetTime: '2 minutes',
+        });
+      })
+      .catch(done);
   });
 
   _.each(standardPages, function (page) {
