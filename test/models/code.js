@@ -1,6 +1,5 @@
 var _ = require('underscore');
-var deepMatch = require('../../util/deep-match');
-var createModel = require('./base');
+var createModel = require('../../util/create-base-model');
 
 
 var Code = createModel();

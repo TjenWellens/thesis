@@ -1,6 +1,6 @@
 var _ = require('underscore');
-var readFile = require('../../util/read-file');
-var deepMatch = require('../../util/deep-match');
+var readFile = require('./read-file');
+var deepMatch = require('./deep-match');
 
 module.exports = function () {
   var all = [];
