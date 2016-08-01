@@ -37,7 +37,6 @@ module.exports = function (app, config, model) {
   }
 
   function showUserData (req, res, next) {
-    console.log(req);
     var user = req.user;
     res.jsend.success(user);
   }
