@@ -60,7 +60,7 @@ describe('pages when authenticated', function () {
       .type('form')
       .send(user)
       .expect(302)
-      .expect('Location', '/')
+      .expect('Location', config.home)
       .expect('set-cookie', /connect.sid/)
       .end(function (err, res) {
         if (err) return done(err);

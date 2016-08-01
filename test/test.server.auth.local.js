@@ -18,7 +18,7 @@ describe('authentication', function () {
       .type('form')
       .send(user)
       .expect(302)
-      .expect('Location', '/')
+      .expect('Location', config.home)
       .end(done);
   });
 
@@ -42,7 +42,7 @@ describe('authentication', function () {
         .type('form')
         .send(user)
         .expect(302)
-        .expect('Location', '/')
+        .expect('Location', config.home)
         .end(done);
     });
 
@@ -52,7 +52,7 @@ describe('authentication', function () {
         .type('form')
         .send(user)
         .expect(302)
-        .expect('Location', '/')
+        .expect('Location', config.home)
         .end(done);
     });
 
@@ -87,11 +87,11 @@ describe('authentication', function () {
     });
   });
 
-  it('/logout redirect to /', function (done) {
+  it('/logout redirect to config.home', function (done) {
     supertest(app)
       .get('/logout')
       .expect(302)
-      .expect('Location', '/')
+      .expect('Location', config.home)
       .end(done);
   });
 });

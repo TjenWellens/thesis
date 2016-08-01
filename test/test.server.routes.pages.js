@@ -7,11 +7,11 @@ var model = require('./models/models');
 var app = require('../server/app')(config, model);
 
 describe('server routes pages', function () {
-  it('/ should redirect to /about', function (next) {
+  it('/ should redirect to config.home', function (next) {
     supertest(app)
       .get('/')
       .expect(302)
-      .expect('Location', '/about')
+      .expect('Location', config.home)
       .end(next);
   });
 
