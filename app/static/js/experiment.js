@@ -9,9 +9,24 @@ $(document).ready(function () {
   // load default language
   refreshCodeSnippet();
 
+  var state = {
+    questions: startQuestions,
+    explanation: startExperimentExplanation,
+    view: startExperimentViewSnippet,
+    reproduce: startExperimentInputSnippet,
+    done: endExperiment,
+  };
+
   //region State Transitions
-  $('#questionsDoneButton').click(startExperimentExplanation);
-  $('#startButton').click(startExperimentViewSnippet);
+  $('#questionsDoneButton').click(state.explanation);
+  $('#startButton').click(state.view);
+
+  function startQuestions () {
+    $('#experiment').attr('style', 'display:none;');
+    $('#viewSnippet').attr('style', 'display:none;');
+    $('#inputSnippet').attr('style', 'display:none;');
+    $('#questions').removeAttr('style');
+  }
 
   function startExperimentExplanation () {
     $('#questions').attr('style', 'display:none;');
@@ -24,7 +39,7 @@ $(document).ready(function () {
 
     new CountDownTimer(viewTime)
       .onTick(updateCountDown)
-      .onEnd(startExperimentInputSnippet)
+      .onEnd(state.reproduce)
       .start();
   }
 
@@ -34,7 +49,7 @@ $(document).ready(function () {
 
     new CountDownTimer(inputTime)
       .onTick(updateCountDown)
-      .onEnd(endExperiment)
+      .onEnd(state.done)
       .start();
   }
 
