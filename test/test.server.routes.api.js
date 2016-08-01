@@ -6,6 +6,9 @@ var config = require('../server/config');
 var model = require('./models/models');
 var app = require('../server/app')(config, model);
 
+var jsendOptions = _.extend({}, config.jsend, {expect: expect});
+var jsend = require('../server/middleware/jsend')(jsendOptions);
+
 var DATA = {
   languages: ['java', 'javascript', 'csharp', 'c'],
   javaSnippet: JSON.parse('{"language": "java", "code": ["foo-java"]}')
@@ -17,7 +20,7 @@ describe('server routes api', function () {
       supertest(app)
         .get('/api/code')
         .expect(200)
-        .expect(DATA.languages)
+        .expect(jsend.succes(DATA.languages))
         .end(done);
     });
 
