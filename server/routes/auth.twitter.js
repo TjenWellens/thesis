@@ -4,6 +4,19 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 module.exports = function (app, config, model) {
   var User = model.user;
 
+  passport.use(createStrategy());
+
+  app.get('/login/twitter',
+    passport.authenticate('twitter'));
+
+  app.get('/login/twitter/return',
+    passport.authenticate('twitter', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true
+    })
+  );
+
   function createStrategy() {
     return new TwitterStrategy(
       config.auth.twitter,
@@ -55,17 +68,4 @@ module.exports = function (app, config, model) {
         //endregion
       });
   }
-
-  passport.use(createStrategy());
-
-  app.get('/login/twitter',
-    passport.authenticate('twitter'));
-
-  app.get('/login/twitter/return',
-    passport.authenticate('twitter', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash: true
-    })
-  );
 };

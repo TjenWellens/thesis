@@ -5,6 +5,23 @@ var LocalStrategy = require('passport-local').Strategy;
 module.exports = function (app, config, model) {
   var User = model.user;
 
+  passport.use(createLoginStrategy());
+  passport.use('local-signup', createSignupStrategy());
+
+  app.post('/signup', passport.authenticate('local-signup', {
+      successRedirect: '/',
+      failureRedirect: '/signup',
+      failureFlash: true
+    })
+  );
+
+  app.post('/login', passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true
+    })
+  );
+
   var util = {
     hashPassword: function (password) {
       return bcrypt.hashSync(password, bcrypt.genSaltSync(config.auth.saltFactor), null);
@@ -116,21 +133,4 @@ module.exports = function (app, config, model) {
         //endregion
       });
   }
-
-  passport.use(createLoginStrategy());
-  passport.use('local-signup', createSignupStrategy());
-
-  app.post('/signup', passport.authenticate('local-signup', {
-      successRedirect: '/',
-      failureRedirect: '/signup',
-      failureFlash: true
-    })
-  );
-
-  app.post('/login', passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash: true
-    })
-  );
 };

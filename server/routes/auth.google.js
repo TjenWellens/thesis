@@ -5,6 +5,19 @@ var Strategy = require('passport-google-oauth').OAuth2Strategy;
 module.exports = function (app, config, model) {
   var User = model.user;
 
+  passport.use(createStrategy());
+
+  app.get('/login/google',
+    passport.authenticate('google', {scope: ['email']}));
+
+  app.get('/login/google/return',
+    passport.authenticate('google', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true
+    })
+  );
+
   function createStrategy () {
     return new Strategy(
       config.auth.google,
@@ -64,17 +77,4 @@ module.exports = function (app, config, model) {
         //endregion
       });
   }
-
-  passport.use(createStrategy());
-
-  app.get('/login/google',
-    passport.authenticate('google', {scope: ['email']}));
-
-  app.get('/login/google/return',
-    passport.authenticate('google', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash: true
-    })
-  );
 };
