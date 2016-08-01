@@ -1,6 +1,8 @@
 module.exports = function (options) {
   var message = (options && options.errorMessages) || {};
   var defaultMessage = (options && options.defaultMessage) || 'Unknown Error';
+
+  // only needed for unit tests
   var expect = options && options.expect;
 
   function createSuccessObject (data) {
@@ -39,6 +41,7 @@ module.exports = function (options) {
     next();
   }
 
+  // only needed for unit tests
   middleware.validate = function (res) {
     expect(res).to.be.an('object');
     expect(res.body).to.be.an('object');
