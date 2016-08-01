@@ -12,7 +12,7 @@ module.exports = function (app, config, model) {
   var Code = model.code;
   var Experiment = model.experiment;
 
-  app.get('/', redirectTo('/about'));
+  app.get('/', redirectTo(config.home));
 
   // standard pages
   _.each(standardPages, function (page) {
@@ -42,10 +42,10 @@ module.exports = function (app, config, model) {
   }
 
   function experiment (req, res, done) {
-
     Code.getLanguages()
       .then(function (languages) {
         res.render('experiment', {
+          home: config.home,
           page: 'experiment',
           title: 'Deliberate Practice Experiment',
           message: req.flash('experiment'),
@@ -69,22 +69,24 @@ module.exports = function (app, config, model) {
   }
 
   //endregion
+
+  //region Helper Functions
+  function renderView (page) {
+    return function (req, res) {
+      res.render(page.view, {
+        home: config.home,
+        page: page.view,
+        title: page.title,
+        message: req.flash(page.view)
+      });
+    }
+  }
+
+  function redirectTo (path) {
+    return function redirectExperiment (req, res) {
+      res.redirect(path);
+    }
+  }
+
+  //endregion
 };
-
-//region Helper Functions
-function renderView (page) {
-  return function (req, res) {
-    res.render(page.view, {
-      page: page.view,
-      title: page.title,
-      message: req.flash(page.view)
-    });
-  }
-}
-
-function redirectTo (path) {
-  return function redirectExperiment (req, res) {
-    res.redirect(path);
-  }
-}
-//endregion

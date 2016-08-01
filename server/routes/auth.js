@@ -13,6 +13,6 @@ module.exports = function (app, config, model) {
 
   app.get('/logout', function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect(config.home);
   })
 };
