@@ -59,4 +59,19 @@ config.jsend = {
   }
 }
 
+config.mail = {
+  provider: 'smtp.gmail.com',
+  email: process.env.MAIL_ADDRESS || 'user@gmail.com',
+  password: process.env.MAIL_PASS || 'pass',
+  defaultData: {
+    from: '"' + config.app.name + '" <experiment@tjenwellens.eu>',
+    to: 'tjen.wellens+thesis@gmail.com',
+    subject: 'Hello',
+    // plaintext body
+    text: 'Hello world',
+    // html body
+    html: '<b>Hello world</b>'
+  }
+}
+
 module.exports = config;
