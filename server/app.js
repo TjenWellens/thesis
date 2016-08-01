@@ -8,9 +8,11 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 var jsend = require('./middleware/jsend');
+var mail = require('../util/mail');
 
 module.exports = function (config, model) {
-  var User = model.user;
+  var sendMail = mail(config.mail);
+
   var app = express();
 
   app.use(morgan('dev'));
@@ -36,6 +38,7 @@ module.exports = function (config, model) {
   app.use(express.static(config.path('app/static')));
 
   require('./routes/pages')(app, config, model);
+  require('./routes/pages.contact')(app, config, model, sendMail);
   require('./routes/api')(app, config, model);
   require('./routes/auth')(app, config, model);
   require('./routes/auth.local')(app, config, model);
