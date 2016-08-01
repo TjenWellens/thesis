@@ -10,11 +10,7 @@ module.exports = function (app, config, model) {
     passport.authenticate('twitter'));
 
   app.get('/login/twitter/return',
-    passport.authenticate('twitter', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash: true
-    })
+    passport.authenticate('twitter', config.auth.login)
   );
 
   function createStrategy() {

@@ -11,12 +11,7 @@ module.exports = function (app, config, model) {
     passport.authenticate('google', {scope: ['email']}));
 
   app.get('/login/google/return',
-    passport.authenticate('google', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash: true
-    })
-  );
+    passport.authenticate('google', config.auth.login));
 
   function createStrategy () {
     return new Strategy(

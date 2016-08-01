@@ -8,19 +8,11 @@ module.exports = function (app, config, model) {
   passport.use(createLoginStrategy());
   passport.use('local-signup', createSignupStrategy());
 
-  app.post('/signup', passport.authenticate('local-signup', {
-      successRedirect: '/',
-      failureRedirect: '/signup',
-      failureFlash: true
-    })
-  );
+  app.post('/signup',
+    passport.authenticate('local-signup', config.auth.signup));
 
-  app.post('/login', passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash: true
-    })
-  );
+  app.post('/login',
+    passport.authenticate('local', config.auth.login));
 
   var util = {
     hashPassword: function (password) {

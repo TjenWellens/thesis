@@ -19,6 +19,16 @@ var config = {
 
 config.auth = {
   saltFactor: 10,
+  login: {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  },
+  signup: {
+    successRedirect: '/',
+    failureRedirect: '/signup',
+    failureFlash: true
+  },
   localstrategy: {
     usernameField: 'email',
     passwordField: 'password',
