@@ -38,12 +38,12 @@ config.auth = {
   twitter: {
     consumerKey: process.env.TWITTER_CONSUMER_KEY || 'foo',
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET || 'bar',
-    callbackURL: 'http://experiment.tjenwellens.eu:' + config.app.port + '/login/twitter/return',
+    callbackURL: 'http://experiment.tjenwellens.eu/login/twitter/return',
   },
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID || 'foo',
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'bar',
-    callbackURL: 'http://experiment.tjenwellens.eu:' + config.app.port + '/login/google/return',
+    callbackURL: 'http://experiment.tjenwellens.eu/login/google/return',
   },
 };
 
