@@ -1,16 +1,20 @@
 extend layout
 block content
-    .starter-template
-        h1
-            | Problems or questions?
-        p.lead
-            | Vivamus hendrerit arcu sed erat molestie
-            | vehicula. Sed auctor neque eu tellus
-            | rhoncus ut eleifend nibh porttitor. Ut in.
-        p
-            | Donec congue lacinia dui, a porttitor
-            | lectus condimentum laoreet. Nunc eu
-            | ullamcorper orci. Quisque eget odio ac
-            | lectus vestibulum faucibus eget in metus.
-            | In pellentesque faucibus vestibulum. Nulla
-            | at nulla justo, eget luctus tortor.
+    form#contactForm(role="form", action="/contact", method="POST")
+        .form-group
+            label(for='email') Email address
+            input#email.form-control(name="email", type='email', placeholder='Your Email Address', autofocus='')
+
+        .form-group
+            label(for='name') Name
+            input#name.form-control(name="name", type='text', placeholder='Your Name', autofocus='')
+
+        .form-group
+            label(for='title') Subject
+            input#title.form-control(name="title", type='text', placeholder='Title goes here', autofocus='')
+
+        .form-group
+            label(for='message') Message
+            textarea#message.form-control(name="message", form="contactForm", rows="8", autofocus='')
+
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Send
