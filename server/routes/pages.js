@@ -31,7 +31,7 @@ module.exports = function (app, config, model) {
   function showExperimentData (req, res, next) {
     Experiment.findOne({user: {id: req.user.id}})
       .then(function (experiment) {
-        res.json(experiment);
+        res.jsend.success(experiment);
       })
       .catch(next);
   }
@@ -39,7 +39,7 @@ module.exports = function (app, config, model) {
   function showUserData (req, res, next) {
     console.log(req);
     var user = req.user;
-    res.json(user);
+    res.jsend.success(user);
   }
 
   function experiment (req, res, done) {

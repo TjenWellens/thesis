@@ -16,7 +16,7 @@ module.exports = function (app, config, model) {
   app.get('/api/code', function (req, res, next) {
     Code.getLanguages()
       .then(function (languages) {
-        res.json(languages);
+        res.jsend.success(languages);
       })
       .catch(next);
   });
