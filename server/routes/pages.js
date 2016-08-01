@@ -14,7 +14,36 @@ module.exports = function (app, config, model) {
 
   app.get('/', redirectTo('/about'));
 
-  app.get('/experiment', auth, function (req, res, done) {
+  // standard pages
+  _.each(standardPages, function (page) {
+    app.get('/' + page.view, renderView(page));
+  });
+
+  app.get('/experiment', auth, experiment);
+
+  // todo: no auth middleware because I want to save the data anyway?
+  app.post('/experiment', saveExperimentData);
+
+  app.get('/user', auth, showUserData);
+
+  app.get('/user/experiment', auth, showExperimentData);
+
+  //region routes
+  function showExperimentData (req, res, next) {
+    Experiment.findOne({user: {id: req.user.id}})
+      .then(function (experiment) {
+        res.json(experiment);
+      })
+      .catch(next);
+  }
+
+  function showUserData (req, res, next) {
+    console.log(req);
+    var user = req.user;
+    res.json(user);
+  }
+
+  function experiment (req, res, done) {
 
     Code.getLanguages()
       .then(function (languages) {
@@ -28,13 +57,13 @@ module.exports = function (app, config, model) {
         });
       })
       .catch(done);
-  });
+  }
 
-  app.post('/experiment', function (req, res, done) {
+  function saveExperimentData (req, res, done) {
     var userData = {};
     if (req.user)
       userData = {id: req.user.id};
-    else if (config.tryHardToMatchUnauthorizedUsers){
+    else if (config.tryHardToMatchUnauthorizedUsers) {
       // try to get as much info as possible, so I can
       userData = {
         notLoggedIn: true,
@@ -54,25 +83,9 @@ module.exports = function (app, config, model) {
         res.redirect('/user/experiment');
       })
       .catch(done);
-  });
+  }
 
-  app.get('/user', auth, function (req, res, next) {
-    console.log(req);
-    var user = req.user;
-    res.json(user);
-  });
-
-  app.get('/user/experiment', auth, function (req, res, next) {
-    Experiment.findOne({user: {id: req.user.id}})
-      .then(function (experiment) {
-        res.json(experiment);
-      })
-      .catch(next);
-  });
-
-  _.each(standardPages, function (page) {
-    app.get('/' + page.view, renderView(page));
-  });
+  //endregion
 };
 
 //region Helper Functions
