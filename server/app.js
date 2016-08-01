@@ -37,10 +37,10 @@ module.exports = function (config, model) {
 
   require('./routes/pages')(app, config, model);
   require('./routes/api')(app, config, model);
+  require('./routes/auth')(app, config, model);
   require('./routes/auth.local')(app, config, model);
   require('./routes/auth.twitter')(app, config, model);
   require('./routes/auth.google')(app, config, model);
-  require('./routes/auth')(app, config, model);
 
   // error handling
   app.use(function (err, req, res, next) {
