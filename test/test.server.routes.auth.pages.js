@@ -70,15 +70,15 @@ describe('pages when authenticated', function () {
   });
 
   describe('GET', function () {
-    var paths = [
+    var routes = [
       '/experiment',
       '/user',
       '/user/experiment',
     ];
 
-    _.each(paths, getPathShould200);
+    _.each(routes, getRouteShould200);
 
-    function getPathShould200 (path) {
+    function getRouteShould200 (path) {
       it(path + ' should 200', function (done) {
         agent
           .get(path)

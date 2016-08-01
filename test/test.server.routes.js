@@ -31,18 +31,16 @@ describe('server routes', function () {
       '/signup',
     ];
 
-    for (var key in routes) {
-      it('should be successful', function (done) {
-        verifySuccess(routes[key], done);
-      });
-    }
+    _.each(routes, getRouteShould200);
 
-    function verifySuccess (route, done) {
-      supertest(app)
-        .get(route)
-        .expect(200)
-        .expect('Content-Type', /html/)
-        .end(done);
+    function getRouteShould200 (route) {
+      it(route + ' should 200', function (done) {
+        supertest(app)
+          .get(route)
+          .expect(200)
+          .expect('Content-Type', /html/)
+          .end(done);
+      });
     }
   });
 
