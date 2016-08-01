@@ -21,8 +21,7 @@ module.exports = function (app, config, model) {
 
   app.get('/experiment', auth, experiment);
 
-  // todo: no auth middleware because I want to save the data anyway?
-  app.post('/experiment', saveExperimentData);
+  app.post('/experiment', auth, saveExperimentData);
 
   app.get('/user', auth, showUserData);
 
@@ -60,22 +59,7 @@ module.exports = function (app, config, model) {
   }
 
   function saveExperimentData (req, res, done) {
-    var userData = {};
-    if (req.user)
-      userData = {id: req.user.id};
-    else if (config.tryHardToMatchUnauthorizedUsers) {
-      // try to get as much info as possible, so I can
-      userData = {
-        notLoggedIn: true,
-        ip: req.ip,
-        headers: req.headers,
-        ua: req.headers && req.headers['user-agent'],
-        xff: req.headers && req.headers['x-forwarded-for'],
-        cra: req.connection && req.connection.remoteAddress,
-        sra: req.socket && req.socket.remoteAddress,
-        csra: req.connection && req.connection.socket && req.connection.socket.remoteAddress,
-      };
-    }
+    var userData = {id: req.user.id};
 
     new Experiment(_.extend({}, req.body, {user: userData}))
       .save()

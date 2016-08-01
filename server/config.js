@@ -15,7 +15,6 @@ var config = {
     saveUninitialized: true,
     resave: true
   },
-  tryHardToMatchUnauthorizedUsers: true,
 };
 
 config.auth = {
