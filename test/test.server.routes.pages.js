@@ -6,14 +6,7 @@ var config = require('../server/config');
 var model = require('./models/models');
 var app = require('../server/app')(config, model);
 
-var Code = model.code;
-
-var DATA = {
-  languages: ['java', 'javascript', 'csharp', 'c'],
-  javaSnippet: JSON.parse('{"language": "java", "code": ["foo-java"]}')
-};
-
-describe('server routes', function () {
+describe('server routes pages', function () {
   it('/ should redirect to /about', function (next) {
     supertest(app)
       .get('/')
@@ -24,7 +17,6 @@ describe('server routes', function () {
 
   describe('front-end routes', function () {
     var routes = [
-      '/experiment',
       '/about',
       '/contact',
       '/login',
@@ -56,35 +48,5 @@ describe('server routes', function () {
       .get('/js/experiment.js')
       .expect(200)
       .end(next);
-  });
-
-  describe('/api/code', function () {
-    it('should return a list of available languages', function (done) {
-      supertest(app)
-        .get('/api/code')
-        .expect(200)
-        .expect(DATA.languages)
-        .end(done);
-    });
-
-    it('/java should return html snippet', function (done) {
-      supertest(app)
-        .get('/api/code/java')
-        .expect(200)
-        .expect(function (res) {
-          expect(res.body).to.have.property('data');
-          expect(res.body.data).have.property('language').to.be.a('string');
-          expect(res.body.data).have.property('code').to.be.an('array');
-        })
-        .expect('Content-Type', /json/)
-        .end(done)
-    });
-
-    it('/foo should return 404', function (done) {
-      supertest(app)
-        .get('/api/code/foo')
-        .expect(404)
-        .end(done)
-    });
   });
 });
