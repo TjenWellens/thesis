@@ -34,10 +34,13 @@ block content
                     button#startButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") Let's go!
 
                 #viewSnippet(style="display:none;")
-                    #code.code.noselect
+                    .code.noselect.snippet-code.snippet-loading-message
 
                 #inputSnippet(style="display:none;")
                     textarea#codeInput.code(name="codeInput", form="experimentForm")
+
+            div(style="display:none;")
+                input.snippet-id.snippet-loading-clear-val(type="hidden", name="snippetId")
 
 
 
