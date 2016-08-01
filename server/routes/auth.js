@@ -10,4 +10,9 @@ module.exports = function (app, config, model) {
   passport.deserializeUser(function (id, done) {
     User.findById(id, done);
   });
+
+  app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+  })
 };

@@ -86,4 +86,12 @@ describe('authentication', function () {
         .end(done);
     });
   });
+
+  it('/logout redirect to /', function (done) {
+    supertest(app)
+      .get('/logout')
+      .expect(302)
+      .expect('Location', '/')
+      .end(done);
+  });
 });
