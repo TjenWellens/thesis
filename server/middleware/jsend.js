@@ -3,14 +3,14 @@ module.exports = function (options) {
   var defaultMessage = (options && options.defaultMessage) || 'Unknown Error';
   var expect = options && options.expect;
 
-  function succes (data) {
+  function createSuccessObject (data) {
     return {
       status: 'success',
       data: data
     };
   }
 
-  function error (statusCode, error) {
+  function createErrorObject (statusCode, error) {
     return {
       status: 'error',
       code: statusCode,
@@ -18,19 +18,19 @@ module.exports = function (options) {
     };
   }
 
-  function middleware(req, res, next) {
+  function middleware (req, res, next) {
     res.jsend = {};
 
     // Success: send
     res.jsend.success = function (data) {
-      res.json(succes(data));
+      res.json(createSuccessObject(data));
     };
 
     // Error: pass on to error handling
     // error handling should check for the jsend attribute
     // and remove it from the jsend
     res.jsend.error = function (statusCode, error) {
-      var errorJsendObject = error(statusCode, error);
+      var errorJsendObject = createErrorObject(statusCode, error);
       errorJsendObject.jsend = true;
       next(errorJsendObject);
     };
@@ -61,8 +61,8 @@ module.exports = function (options) {
     }
   };
 
-  middleware.succes = succes;
-  middleware.error = error;
+  middleware.succes = createSuccessObject;
+  middleware.error = createErrorObject;
 
   return middleware;
 };
