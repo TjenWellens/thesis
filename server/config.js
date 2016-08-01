@@ -36,4 +36,10 @@ config.auth = {
   },
 };
 
+// todo: get into static/js/experiment.js
+config.experiment = {
+  showSnippet: {time: '3:00', seconds: 3 * 60},
+  inputSnippet: {time: '2:00', seconds: 2 * 60},
+};
+
 module.exports = config;
