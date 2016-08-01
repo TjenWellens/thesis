@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
+var jsend = require('./middleware/jsend');
 
 module.exports = function (config, model) {
   var User = model.user;
@@ -20,6 +21,7 @@ module.exports = function (config, model) {
   app.use(session(config.session));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(jsend(config.jsend));
 
   app.set('view engine', 'jade');
   app.set('views', config.path('app/views'));

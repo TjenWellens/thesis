@@ -42,4 +42,11 @@ config.experiment = {
   inputSnippet: {time: '2:00', seconds: 2 * 60},
 };
 
+config.jsend = {
+  errorMessages: {
+    '404': 'Not Found',
+    '401': 'Not Authenticated',
+  }
+}
+
 module.exports = config;

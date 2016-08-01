@@ -1,5 +1,3 @@
-var jsend = require('../../util/jsend');
-
 module.exports = function (app, config, model) {
   var Code = model.code;
 
@@ -10,7 +8,7 @@ module.exports = function (app, config, model) {
     Code.getSnippet(language)
       .then(function (snippet) {
         if (!snippet) res.status(404).send('404 Language not found');
-        else res.json(jsend.success(snippet));
+        else res.jsend.success(snippet);
       })
       .catch(next);
   });
