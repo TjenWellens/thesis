@@ -46,9 +46,16 @@ describe('server routes', function () {
     }
   });
 
-  it('/css/style.css should exits', function (next) {
+  it('/css/style.css should exit', function (next) {
     supertest(app)
       .get('/css/style.css')
+      .expect(200)
+      .end(next);
+  });
+
+  it('/js/experiment.js should exit', function (next) {
+    supertest(app)
+      .get('/js/experiment.js')
       .expect(200)
       .end(next);
   });
