@@ -11,7 +11,7 @@ var jsend = require('../server/middleware/jsend')(jsendOptions);
 
 var DATA = {
   languages: ['java', 'javascript', 'csharp', 'c'],
-  javaSnippet: JSON.parse('{"language": "java", "code": ["foo-java"]}')
+  javaSnippet: JSON.parse('{"_id": 0, "cols": 8, "rows": 1, "language": "java", "code": ["foo-java"]}')
 };
 
 describe('server routes api', function () {
@@ -28,11 +28,7 @@ describe('server routes api', function () {
       supertest(app)
         .get('/api/code/java')
         .expect(200)
-        .expect(function (res) {
-          expect(res.body).to.have.property('data');
-          expect(res.body.data).have.property('language').to.be.a('string');
-          expect(res.body.data).have.property('code').to.be.an('array');
-        })
+        .expect(jsend.succes(DATA.javaSnippet))
         .expect('Content-Type', /json/)
         .end(done)
     });
