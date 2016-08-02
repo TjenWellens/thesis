@@ -8,7 +8,7 @@ module.exports = function (mongoose) {
     email: String,
     title: String,
     message: String,
-    body: [mongoose.Schema.Types.Mixed],
+    body: mongoose.Schema.Types.Mixed,
   }, {strict: false});
 
   return mongoose.model('Contact', schema);

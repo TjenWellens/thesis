@@ -5,7 +5,7 @@ module.exports = function (mongoose) {
       name: String,
       date: {type: Date, default: Date.now},
     },
-    data: [mongoose.Schema.Types.Mixed],
+    data: mongoose.Schema.Types.Mixed,
   }, {strict: false});
 
   return mongoose.model('Experiment', schema);
