@@ -6,8 +6,6 @@ var Code = require('./code');
 var Experiment = require('../../test/models/experiment');
 var Contact = require('../../test/models/contact');
 
-Code.seed(path.join(__dirname, '../../test/models/','languages.json'));
-
 module.exports = {
   user: User,
   code: Code,
