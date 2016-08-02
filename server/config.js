@@ -60,6 +60,11 @@ config.jsend = {
   }
 }
 
+config.database = {
+  // todo: change db to localhost?
+  url: 'mongodb://db/experiment',
+}
+
 config.mail = {
   provider: 'smtp.gmail.com',
   email: process.env.MAIL_ADDRESS || 'user@gmail.com',
