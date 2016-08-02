@@ -44,7 +44,7 @@ module.exports = function (app, config, model) {
         function failIfUserDoesNotExists (user) {
           if (!user) {
             console.log('login failed: email does not exist')
-            done(null, false, req.flash('signup', 'That email does not exist'));
+            done(null, false, req.flash('login', 'Login failed'));
             return Promise.reject(null);
           }
           return user;
@@ -52,7 +52,7 @@ module.exports = function (app, config, model) {
 
         function checkPassword (user) {
           if (!util.comparePassword(password, user.local.password)) {
-            done(null, false, req.flash('login', 'Incorrect password.'));
+            done(null, false, req.flash('login', 'Login failed'));
             return Promise.reject(null);
           }
           return user;
