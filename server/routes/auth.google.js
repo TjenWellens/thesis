@@ -19,9 +19,7 @@ module.exports = function (app, config, model) {
       function (token, tokenSecret, profile, done) {
         var userData = {
           provider: 'google',
-          google: {
-            id: profile.id,
-          }
+          'google.id': profile.id,
         };
 
         User.findOne(userData)

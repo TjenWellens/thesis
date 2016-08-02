@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var path = require('path');
 
-var User = require('../../test/models/user');
+var User = require('./user');
 var Code = require('../../test/models/code');
 var Experiment = require('../../test/models/experiment');
 var Contact = require('../../test/models/contact');

@@ -29,7 +29,7 @@ module.exports = function (app, config, model) {
 
   //region routes
   function showExperimentData (req, res, next) {
-    Experiment.findOne({user: {id: req.user.id}})
+    Experiment.findOne({'user.id': req.user.id})
       .then(function (experiment) {
         res.jsend.success(experiment);
       })

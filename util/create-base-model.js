@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var readFile = require('./read-file');
-var deepMatch = require('./deep-match');
+var mongoMatch = require('./mongo-match');
 
 module.exports = function () {
   function Model (data) {
@@ -25,7 +25,7 @@ module.exports = function () {
   Model.findOne = function (searchData) {
     return new Promise(function (resolve, reject) {
       var matchingItem = _.find(Model._all, function (model) {
-        return deepMatch(model, searchData);
+        return mongoMatch(model, searchData);
       });
       return resolve(matchingItem);
     })

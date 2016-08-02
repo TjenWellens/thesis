@@ -19,9 +19,7 @@ module.exports = function (app, config, model) {
       function (token, tokenSecret, profile, done) {
         var userData = {
           provider: 'twitter',
-          twitter: {
-            id: profile._json.id,
-          }
+          'twitter.id': profile._json.id,
         };
 
         User.findOne(userData)

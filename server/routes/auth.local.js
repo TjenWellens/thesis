@@ -31,9 +31,7 @@ module.exports = function (app, config, model) {
 
         var searchData = {
           provider: 'local',
-          local: {
-            email: email,
-          }
+          'local.email': email,
         };
 
         User.findOne(searchData)
@@ -79,9 +77,7 @@ module.exports = function (app, config, model) {
 
         var searchData = {
           provider: 'local',
-          local: {
-            email: email,
-          }
+          'local.email': email,
         };
 
         User.findOne(searchData)
