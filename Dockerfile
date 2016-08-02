@@ -23,7 +23,7 @@ RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 RUN sudo apt-get install -yq nodejs
 
 # Install Prerequisites
-RUN npm install --quiet -g mocha pm2
+RUN npm install --quiet -g mocha pm2 nodemon
 
 RUN mkdir /opt/experiment
 RUN mkdir -p /opt/experiment/public/lib
