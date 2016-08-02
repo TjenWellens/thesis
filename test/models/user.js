@@ -1,5 +1,5 @@
 var mongoose = require('../../util/fake-mongoose');
 
-var User = mongoose.Schema();
+var User = new mongoose.Schema();
 
-module.exports = User;
+module.exports = mongoose.model('User', User);

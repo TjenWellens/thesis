@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var mongoose = require('../../util/fake-mongoose');
 
-var Contact = mongoose.Schema();
+var Contact = new mongoose.Schema();
 
-module.exports = Contact;
+module.exports = mongoose.model('Contact', Contact);
