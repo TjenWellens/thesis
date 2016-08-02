@@ -1,7 +1,7 @@
 {
   "name": "experiment",
   "version": "1.0.0",
-  "description": "",
+  "description": "Deliberate Practice Experiment for Programmers",
   "main": "server.js",
   "scripts": {
     "test": "mocha",
@@ -34,5 +34,16 @@
     "passport-twitter": "^1.0.4",
     "stylus": "^0.54.5",
     "underscore": "^1.8.3"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TjenWellens/thesis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TjenWellens/thesis/issues"
+  },
+  "homepage": "https://github.com/TjenWellens/thesis#readme"
 }
