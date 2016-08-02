@@ -1,7 +1,6 @@
 var _ = require('underscore');
 
 module.exports = function mongoMatch (model, searchData) {
-  console.log('mongoMatch: ', model, ' - ', searchData);
   for (var key in searchData) {
     var value = searchData[key];
 

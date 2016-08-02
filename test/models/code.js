@@ -11,14 +11,20 @@ Code.prototype.calculatExtraProperties = function () {
 }
 
 Code.getSnippet = function (language) {
-  return Code.findOne({language: language});
+  return this.findOne({language: language});
 }
 
 Code.getLanguages = function () {
+  var that = this;
   return new Promise(function (resolve, reject) {
-    return resolve(_.map(Code._all, function (snippet) {
-      return snippet.language;
-    }));
+    that.find()
+      .then(function (snippets) {
+        return _.map(snippets, function (snippet) {
+          return snippet.language;
+        })
+      })
+      .then(resolve)
+      .catch(reject);
   });
 }
 
