@@ -1,7 +1,7 @@
 web:
   restart: always
   build: .
-  container_name: meanjs
+  container_name: experiment
   command: npm start
   links:
    - db
