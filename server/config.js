@@ -64,6 +64,10 @@ config.database = {
   url: 'mongodb://localhost/experiment',
 }
 
+if (process.env.NODE_ENV == 'docker') {
+  config.database.url = 'mongodb://db/experiment'
+}
+
 config.mail = {
   provider: 'smtp.gmail.com',
   email: process.env.MAIL_ADDRESS || 'user@gmail.com',

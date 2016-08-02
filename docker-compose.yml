@@ -10,7 +10,7 @@ web:
    - "5858:5858"
    - "35729:35729"
   environment:
-   - NODE_ENV=development
+   - NODE_ENV=docker
   volumes:
    - ./:/opt/mean.js
    - /opt/mean.js/node_modules
