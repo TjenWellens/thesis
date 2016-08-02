@@ -31,6 +31,15 @@ module.exports = function () {
     })
   }
 
+  Model.find = function (searchData) {
+    return new Promise(function (resolve, reject) {
+      var matchingItems = _.filter(Model._all, function (model) {
+        return mongoMatch(model, searchData);
+      });
+      return resolve(matchingItems);
+    })
+  }
+
   Model.seed = function (file) {
     var seed = JSON.parse(readFile(file, 'utf8'));
     _.each(seed, function (data) {

@@ -12,7 +12,9 @@ module.exports = function (app, config, model) {
   app.get('/user/experiment', auth, showExperimentData);
 
   function showExperimentData (req, res, next) {
-    Experiment.findOne({'user.id': req.user.id})
+    if (!req.user.id) return next('Authentication problem');
+
+    Experiment.find({'user.id': req.user.id})
       .then(function (experiment) {
         res.jsend.success(experiment);
       })
@@ -36,9 +38,13 @@ module.exports = function (app, config, model) {
   }
 
   function saveExperimentData (req, res, done) {
-    var userData = {id: req.user.id};
+    var userData = {id: req.user.id, name: req.user.name};
+    var data = {
+      user: userData,
+      data: _.extend({}, req.body),
+    }
 
-    new Experiment(_.extend({}, req.body, {user: userData}))
+    new Experiment(data)
       .save()
       .then(function () {
         res.redirect('/user/experiment');
