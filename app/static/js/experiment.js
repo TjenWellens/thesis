@@ -101,7 +101,7 @@ $(document).ready(function () {
    * Set snippet content in elements that match the class
    */
   function applySnippet (snippet) {
-    var code = '<p>' + snippet.code.join('<br>') + '</p>';
+    var code = snippet.code.join('<br>');
 
     var $code = $('.snippet-code');
     var $id = $('.snippet-id');
@@ -124,7 +124,7 @@ $(document).ready(function () {
   function unwrapJsend (success) {
     return function (jsend) {
       if (jsend.status !== 'success') {
-        console.log('Error with ajax call(' + url + '): ');
+        console.log('Error with ajax call: ');
         console.log(jsend);
         alert('Problem with fetching selected language, please try again or select another language');
         return;
