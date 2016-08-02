@@ -15,14 +15,13 @@ codeSchema.methods.calculatExtraProperties = function calculatExtraProperties ()
   }, 0);
 };
 
-codeSchema.methods.getSnippet = function (language) {
-  return codeSchema.findOne({language: language});
+codeSchema.statics.getSnippet = function (language) {
+  return this.findOne({language: language});
 }
 
-codeSchema.methods.getLanguages = function () {
+codeSchema.statics.getLanguages = function () {
   return new Promise(function (resolve, reject) {
-    codeSchema
-      .find()
+    this.find()
       .then(function (snippets) {
         return _.map(snippets, function (snippet) {
           return snippet.language;
