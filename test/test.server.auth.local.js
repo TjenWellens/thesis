@@ -18,7 +18,7 @@ describe('authentication', function () {
       .type('form')
       .send(user)
       .expect(302)
-      .expect('Location', config.home)
+      .expect('Location', config.loginSuccessRedirect)
       .end(done);
   });
 
@@ -42,7 +42,7 @@ describe('authentication', function () {
         .type('form')
         .send(user)
         .expect(302)
-        .expect('Location', config.home)
+        .expect('Location', config.loginSuccessRedirect)
         .end(done);
     });
 
@@ -52,7 +52,7 @@ describe('authentication', function () {
         .type('form')
         .send(user)
         .expect(302)
-        .expect('Location', config.home)
+        .expect('Location', config.loginSuccessRedirect)
         .end(done);
     });
 

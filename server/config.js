@@ -16,17 +16,18 @@ var config = {
     resave: true
   },
   home: '/about',
+  loginSuccessRedirect: '/experiment',
 };
 
 config.auth = {
   saltFactor: 10,
   login: {
-    successRedirect: config.home,
+    successRedirect: config.loginSuccessRedirect,
     failureRedirect: '/login',
     failureFlash: true
   },
   signup: {
-    successRedirect: config.home,
+    successRedirect: config.loginSuccessRedirect,
     failureRedirect: '/signup',
     failureFlash: true
   },
