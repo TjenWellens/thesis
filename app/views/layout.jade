@@ -2,8 +2,8 @@ doctype
 html
     head
         title #{title} - My Site
-        link(rel='stylesheet', href='css/bootstrap.min.css')
-        link(rel='stylesheet', href='css/style.css')
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/css/style.css')
     body
         nav.navbar.navbar-inverse.navbar-fixed-top
             .container
@@ -42,5 +42,5 @@ html
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
         script.
             window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')
-        script(src='js/bootstrap.min.js')
+        script(src='/js/bootstrap.min.js')
         block customScripts
