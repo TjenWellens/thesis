@@ -1,20 +1,20 @@
 var _ = require('underscore');
 var mongoose = require('../../util/fake-mongoose');
 
-var Code = new mongoose.Schema();
+var schema = new mongoose.Schema();
 
-Code.methods.calculatExtraProperties = function () {
+schema.methods.calculatExtraProperties = function () {
   this.rows = this.code.length;
   this.cols = _.reduce(this.code, function (memo, line) {
     return Math.max(memo, line.length);
   }, 0);
-}
+};
 
-Code.statics.getSnippet = function (language) {
+schema.statics.getSnippet = function (language) {
   return this.findOne({language: language});
 }
 
-Code.statics.getLanguages = function () {
+schema.statics.getLanguages = function () {
   var that = this;
   return new Promise(function (resolve, reject) {
     that.find()
@@ -28,9 +28,9 @@ Code.statics.getLanguages = function () {
   });
 }
 
-Code.pre('save', function (next) {
+schema.pre('save', function (next) {
   this.calculatExtraProperties();
   next();
 });
 
-module.exports = mongoose.model('Code', Code);
+module.exports = mongoose.model('Code', schema);

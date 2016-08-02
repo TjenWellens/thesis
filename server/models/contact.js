@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var userSchema = new mongoose.Schema({
+var schema = new mongoose.Schema({
   user: {
     id: String,
     name: String
@@ -12,4 +12,4 @@ var userSchema = new mongoose.Schema({
   body: [mongoose.Schema.Types.Mixed],
 }, {strict: false});
 
-module.exports = mongoose.model('Contact', userSchema);
+module.exports = mongoose.model('Contact', schema);
