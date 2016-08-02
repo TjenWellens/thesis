@@ -39,6 +39,7 @@ module.exports = function (config, model) {
 
   require('./routes/pages')(app, config, model);
   require('./routes/pages.contact')(app, config, model, sendMail);
+  require('./routes/pages.experiment')(app, config, model);
   require('./routes/api')(app, config, model);
   require('./routes/auth')(app, config, model);
   require('./routes/auth.local')(app, config, model);
