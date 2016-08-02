@@ -23,11 +23,11 @@ function Schema (propertiesDefinition, options) {
 
     hooks.push(callback);
   };
-
-  this.Types = {
-    Mixed: 'Mixed'
-  };
 }
+
+Schema.Types = {
+  Mixed: 'Mixed'
+};
 
 /**
  *
