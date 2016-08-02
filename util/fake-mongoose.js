@@ -2,7 +2,39 @@ var _ = require('underscore');
 var readFile = require('./read-file');
 var mongoMatch = require('./mongo-match');
 
-module.exports = function () {
+/**
+ *
+ * @param propertiesDefinition ignored
+ * @param options ignored
+ * @returns {Model}
+ */
+function Schema (propertiesDefinition, options) {
+  this.methods = {};
+  this.statics = {};
+  this._preHooks = {};
+
+  this.pre = function (eventName, callback) {
+    var hooks = this._preHooks[eventName];
+
+    if (!hooks) {
+      hooks = [];
+      this._preHooks[eventName] = hooks;
+    }
+
+    hooks.push(callback);
+  };
+}
+
+Schema.Types = {
+  Mixed: 'Mixed'
+};
+
+/**
+ *
+ * @param name ignored
+ * @param schema
+ */
+function convertSchemaToModel (name, schema) {
   function Model (data) {
     _.extend(this, data);
   }
@@ -15,7 +47,12 @@ module.exports = function () {
 
   Model.prototype.save = function () {
     var model = this;
+
     return new Promise(function (resolve, reject) {
+      _.each(Model._preHooks['save'], function (hook) {
+        hook.call(model, doNothing);
+      });
+
       model._id = Model._all.length;
       Model._all.push(model);
       resolve(model);
@@ -52,5 +89,26 @@ module.exports = function () {
     done(null, Model._all[id]);
   }
 
+  // add methods
+  for (var key in schema.methods) {
+    Model.prototype[key] = schema.methods[key];
+  }
+
+  // add statics
+  for (var key in schema.statics) {
+    Model[key] = schema.statics[key];
+  }
+
+  // add pre hooks
+  Model._preHooks = schema._preHooks;
+
   return Model;
+};
+
+function doNothing () {
+}
+
+module.exports = {
+  Schema: Schema,
+  model: convertSchemaToModel
 };

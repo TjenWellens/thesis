@@ -1,15 +1,15 @@
-var mongoose = require('mongoose');
+module.exports = function (mongoose) {
+  var schema = new mongoose.Schema({
+    user: {
+      id: String,
+      name: String
+    },
+    name: String,
+    email: String,
+    title: String,
+    message: String,
+    body: [mongoose.Schema.Types.Mixed],
+  }, {strict: false});
 
-var userSchema = new mongoose.Schema({
-  user: {
-    id: String,
-    name: String
-  },
-  name: String,
-  email: String,
-  title: String,
-  message: String,
-  body: [mongoose.Schema.Types.Mixed],
-}, {strict: false});
-
-module.exports = mongoose.model('Contact', userSchema);
+  return mongoose.model('Contact', schema);
+}

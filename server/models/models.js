@@ -1,14 +1,8 @@
-var _ = require('underscore');
-var path = require('path');
-
-var User = require('./user');
-var Code = require('./code');
-var Experiment = require('./experiment');
-var Contact = require('./contact');
-
-module.exports = {
-  user: User,
-  code: Code,
-  experiment: Experiment,
-  contact: Contact,
+module.exports = function (mongoose) {
+  return {
+    user: require('./user')(mongoose),
+    code: require('./code')(mongoose),
+    experiment: require('./experiment')(mongoose),
+    contact: require('./contact')(mongoose),
+  };
 };

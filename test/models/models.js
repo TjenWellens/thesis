@@ -1,21 +1,9 @@
-var _ = require('underscore');
+var mongoose = require('../../util/fake-mongoose');
 var path = require('path');
+var seed = require('../../util/seed-database');
 
-var User = require('./user');
-var Code = require('./code');
-var Experiment = require('./experiment');
-var Contact = require('./contact');
+var models = require('../../server/models/models')(mongoose);
 
-Code.seed(path.join(__dirname, 'languages.json'));
+seed(models.code, path.join(__dirname, 'languages.json'));
 
-// calculate extra properties
-_.each(Code._all, function (snippet) {
-  snippet.calculatExtraProperties();
-});
-
-module.exports = {
-  user: User,
-  code: Code,
-  experiment: Experiment,
-  contact: Contact,
-};
+module.exports = models;

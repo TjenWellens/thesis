@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 require('dotenv').config();
 
 var config = require('./server/config');
-var model = require('./server/models/models');
+var model = require('./server/models/models')(mongoose);
 var app = require('./server/app')(config, model);
 
 // connect to MongoDB
