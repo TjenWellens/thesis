@@ -20,8 +20,9 @@ codeSchema.statics.getSnippet = function (language) {
 }
 
 codeSchema.statics.getLanguages = function () {
+  var that = this;
   return new Promise(function (resolve, reject) {
-    this.find()
+    that.find()
       .then(function (snippets) {
         return _.map(snippets, function (snippet) {
           return snippet.language;
