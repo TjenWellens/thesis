@@ -2,7 +2,8 @@ module.exports = function (mongoose) {
   var schema = new mongoose.Schema({
     user: {
       id: String,
-      name: String
+      name: String,
+      date: {type: Date, default: Date.now},
     },
     data: [mongoose.Schema.Types.Mixed],
   }, {strict: false});
