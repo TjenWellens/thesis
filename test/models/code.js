@@ -28,4 +28,9 @@ Code.statics.getLanguages = function () {
   });
 }
 
+Code.pre('save', function (next) {
+  this.calculatExtraProperties();
+  next();
+});
+
 module.exports = mongoose.model('Code', Code);

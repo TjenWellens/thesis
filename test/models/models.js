@@ -1,17 +1,13 @@
 var _ = require('underscore');
 var path = require('path');
+var seed = require('../../util/seed-database');
 
 var User = require('./user');
 var Code = require('./code');
 var Experiment = require('./experiment');
 var Contact = require('./contact');
 
-Code.seed(path.join(__dirname, 'languages.json'));
-
-// calculate extra properties
-_.each(Code._all, function (snippet) {
-  snippet.calculatExtraProperties();
-});
+seed(Code, path.join(__dirname, 'languages.json'));
 
 module.exports = {
   user: User,
