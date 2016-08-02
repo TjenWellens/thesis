@@ -29,6 +29,7 @@ module.exports = function (app, config, model) {
           page: 'experiment',
           title: 'Deliberate Practice Experiment',
           message: req.flash('experiment'),
+          loggedIn: req.user ? true : false,
           languages: languages || [],
           showSnippetTime: config.experiment.showSnippet.time,
           inputSnippetTime: config.experiment.inputSnippet.time,

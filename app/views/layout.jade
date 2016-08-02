@@ -27,6 +27,10 @@ html
                         li(class=page === 'contact' ? 'active' : '')
                             a(href="/contact")
                                 | Contact
+                    if loggedIn
+                        a.nav.navbar-nav.pull-right(href="/logout") logout
+                    else
+                        a.nav.navbar-nav.pull-right(href="/login") login
         if message.length > 0
             .alert.alert-info #{message}
         .container

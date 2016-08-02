@@ -21,7 +21,8 @@ module.exports = function (app, config, model) {
         home: config.home,
         page: page.view,
         title: page.title,
-        message: req.flash(page.view)
+        message: req.flash(page.view),
+        loggedIn: req.user ? true : false,
       });
     }
   }
