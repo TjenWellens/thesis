@@ -1,4 +1,4 @@
-var mongoose = require('../../util/create-base-model');
+var mongoose = require('../../util/fake-mongoose');
 
 var User = mongoose.Schema();
 
