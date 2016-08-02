@@ -2,7 +2,13 @@ var _ = require('underscore');
 var readFile = require('./read-file');
 var mongoMatch = require('./mongo-match');
 
-module.exports = function () {
+/**
+ *
+ * @param propertiesDefinition ignored
+ * @param options ignored
+ * @returns {Model}
+ */
+function createSchemaFactory() {
   function Model (data) {
     _.extend(this, data);
   }
@@ -52,5 +58,24 @@ module.exports = function () {
     done(null, Model._all[id]);
   }
 
+  // mongoose stuff
+  Model.Types = {
+    Mixed: 'Mixed'
+  }
+
   return Model;
+};
+
+/**
+ *
+ * @param name ignored
+ * @param schema schema from
+ */
+function convertSchemaToModel (name, schema) {
+
+}
+
+module.exports = {
+  Schema: createSchemaFactory,
+  model : convertSchemaToModel
 };

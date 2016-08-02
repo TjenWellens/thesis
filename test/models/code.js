@@ -1,7 +1,7 @@
 var _ = require('underscore');
-var createModel = require('../../util/create-base-model');
+var mongoose = require('../../util/create-base-model');
 
-var Code = createModel();
+var Code = mongoose.Schema();
 
 Code.prototype.calculatExtraProperties = function () {
   this.rows = this.code.length;

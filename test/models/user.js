@@ -1,5 +1,5 @@
-var createModel = require('../../util/create-base-model');
+var mongoose = require('../../util/create-base-model');
 
-var User = createModel();
+var User = mongoose.Schema();
 
 module.exports = User;

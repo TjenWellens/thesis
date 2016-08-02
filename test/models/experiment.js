@@ -1,6 +1,6 @@
 var _ = require('underscore');
-var createModel = require('../../util/create-base-model');
+var mongoose = require('../../util/create-base-model');
 
-var Experiment = createModel();
+var Experiment = mongoose.Schema();
 
 module.exports = Experiment;
