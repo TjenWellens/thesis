@@ -8,12 +8,12 @@ var codeSchema = new mongoose.Schema({
   cols: Number,
 });
 
-codeSchema.pre('save', function (next) {
-  calculatExtraProperties.call(this);
-  next();
-});
-
-codeSchema.methods.calculatExtraProperties = calculatExtraProperties;
+codeSchema.methods.calculatExtraProperties = function calculatExtraProperties () {
+  this.rows = this.code.length;
+  this.cols = _.reduce(this.code, function (memo, line) {
+    return Math.max(memo, line.length);
+  }, 0);
+};
 
 codeSchema.methods.getSnippet = function (language) {
   return codeSchema.findOne({language: language});
@@ -33,11 +33,9 @@ codeSchema.methods.getLanguages = function () {
   });
 }
 
-module.exports = mongoose.model('Code', codeSchema);
+codeSchema.pre('save', function (next) {
+  this.calculatExtraProperties();
+  next();
+});
 
-function calculatExtraProperties () {
-  this.rows = this.code.length;
-  this.cols = _.reduce(this.code, function (memo, line) {
-    return Math.max(memo, line.length);
-  }, 0);
-}
+module.exports = mongoose.model('Code', codeSchema);
