@@ -13,7 +13,9 @@ mongoose.connect(config.database.url)
     console.log('---Connected to db ' + config.database.url);
   })
   .catch(function (err) {
-    throw err;
+    console.error('Failed to connect with database: ', err);
+    console.log('Failed to connect with database: ', err);
+    process.exit(1);
   });
 
 // Start server
