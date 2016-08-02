@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-var config = require('../config');
-
 var userSchema = new mongoose.Schema({
   provider: String,
   name: String,
