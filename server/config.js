@@ -61,8 +61,7 @@ config.jsend = {
 }
 
 config.database = {
-  // todo: change db to localhost?
-  url: 'mongodb://db/experiment',
+  url: 'mongodb://localhost/experiment',
 }
 
 config.mail = {
