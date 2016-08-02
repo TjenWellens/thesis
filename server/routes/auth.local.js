@@ -107,7 +107,6 @@ module.exports = function (app, config, model) {
             local: {
               email: email,
               password: util.hashPassword(password),
-              registeredOn: new Date(),
             }
           });
         }
