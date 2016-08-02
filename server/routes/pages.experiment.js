@@ -9,14 +9,30 @@ module.exports = function (app, config, model) {
 
   app.post('/experiment', auth, saveExperimentData);
 
-  app.get('/user/experiment', auth, showExperimentData);
+  app.get('/experiment/result', auth, showExperimentData);
 
   function showExperimentData (req, res, next) {
     if (!req.user.id) return next('Authentication problem');
 
-    Experiment.find({'user.id': req.user.id})
+    Experiment.findOne({'user.id': req.user.id}, {}, {sort: {'date': -1}})
       .then(function (experiment) {
-        res.jsend.success(experiment);
+        var snippetId = experiment.data.snippetId;
+        Code.findOne({_id: snippetId})
+          .then(function (snippet) {
+            var code = snippet && snippet.code.join('<br>');
+
+            res.render('result', {
+              home: config.home,
+              page: 'result',
+              title: 'Results',
+              message: req.flash('result'),
+              loggedIn: req.user ? true : false,
+              language: experiment.data.language,
+              snippet: code,
+              recall: experiment.data.codeInput,
+            });
+          })
+          .catch(next);
       })
       .catch(next);
   }
@@ -48,7 +64,7 @@ module.exports = function (app, config, model) {
     new Experiment(data)
       .save()
       .then(function () {
-        res.redirect('/user/experiment');
+        res.redirect('/experiment/result');
       })
       .catch(done);
   }

@@ -1,0 +1,15 @@
+extend layout
+block content
+    .starter-template
+        h1 Results of experiment
+        h3 You selected the language:
+        p #{language}
+
+        h3 Original:
+        .code.noselect
+            p #{snippet}
+
+        h3 Your input:
+        .code.noselect
+            p #{recall}
+
