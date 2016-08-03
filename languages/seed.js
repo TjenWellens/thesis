@@ -14,9 +14,11 @@ mongoose.connect(config.database.url)
   .then(function () {
     var Code = models.code;
     var snippets = getSnippets();
-    _.each(snippets, function (snippet) {
-      new Code(snippet).save();
-    });
+    return Promise.all(_.map(snippets, function (snippet) {
+      return new Code(snippet).save();
+    }));
+  })
+  .then(function () {
     process.exit(0);
   })
   .catch(function (err) {
