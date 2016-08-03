@@ -2,7 +2,6 @@ var _ = require('underscore');
 var mongoose = require('mongoose');
 var models = require('../server/models/models')(mongoose);
 
-require('dotenv').config();
 var config = require('../server/config');
 var getSnippets = require('./languages');
 
@@ -18,6 +17,7 @@ mongoose.connect(config.database.url)
     _.each(snippets, function (snippet) {
       new Code(snippet).save();
     });
+    process.exit(0);
   })
   .catch(function (err) {
     console.error('Failed to connect with database: ', err);

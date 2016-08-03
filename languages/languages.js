@@ -9,7 +9,8 @@ function fromJsonFile () {
     var title = languageSetting.title;
     var name = languageSetting.name;
     var file = path.join(__dirname, name + '.txt');
-    var code = readFile(file).split('\n');
+    var fileContents = readFile(file);
+    var code = fileContents ? fileContents.split('\n') : [];
 
     return {
       language: name,
