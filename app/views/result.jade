@@ -1,4 +1,7 @@
 extend layout
+
+include mixins/snippet
+
 block content
     .starter-template
         h1 Results of experiment
@@ -6,10 +9,8 @@ block content
         p #{language}
 
         h3 Original:
-        .code.noselect
-            p #{snippet}
+        +snippet(expected)
 
         h3 Your input:
-        .code.noselect
-            p #{recall}
+        +snippet(actual)
 

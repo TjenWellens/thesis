@@ -5,6 +5,7 @@ module.exports = function (mongoose) {
       name: String,
     },
     date: {type: Date, default: Date.now},
+    code: [String],
     data: mongoose.Schema.Types.Mixed,
   }, {strict: false});
 

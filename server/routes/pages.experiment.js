@@ -19,7 +19,10 @@ module.exports = function (app, config, model) {
         var snippetId = experiment.data.snippetId;
         Code.findOne({_id: snippetId})
           .then(function (snippet) {
-            var code = snippet && snippet.code.join('<br>');
+            if (!snippet) Promise.reject('Oops, no snippet available.');
+
+            var expected = {code: snippet.code};
+            var actual = {code: experiment.code};
 
             res.render('result', {
               home: config.home,
@@ -28,8 +31,8 @@ module.exports = function (app, config, model) {
               message: req.flash('result'),
               loggedIn: req.user ? true : false,
               language: experiment.data.language,
-              snippet: code,
-              recall: experiment.data.codeInput,
+              expected: expected,
+              actual: actual,
             });
           })
           .catch(next);
@@ -59,6 +62,7 @@ module.exports = function (app, config, model) {
     var data = {
       user: userData,
       data: _.extend({}, req.body),
+      code: req.body.codeInput.replace(new RegExp('\r', 'g'), '').split('\n'),
     }
 
     new Experiment(data)
