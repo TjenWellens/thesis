@@ -53,14 +53,19 @@ module.exports = function (app, config, model) {
   function experiment (req, res, done) {
     Code.getSnippet(config.experiment.snippet)
       .then(function (snippet) {
-        if(!snippet) return Promise.reject('snippet not found');
+        if (!snippet) return Promise.reject('snippet not found');
         res.render('experiment', {
           home: config.home,
           page: 'experiment',
           title: 'Deliberate Practice Experiment',
           message: req.flash('experiment'),
           loggedIn: req.user ? true : false,
-          snippet: {code: snippet.code, id: snippet.id},
+          snippet: {
+            code: snippet.code,
+            id: snippet.id,
+            rows: snippet.rows + 2,
+            cols: snippet.cols + 2,
+          },
           showSnippetTime: config.experiment.showSnippet.time,
           inputSnippetTime: config.experiment.inputSnippet.time,
         });

@@ -80,7 +80,7 @@ block content
                         +snippet(snippet)
 
                 #inputSnippet(style="display:none;")
-                    textarea#codeInput.code(name="codeInput", form="experimentForm")
+                    textarea#codeInput.code(name="codeInput", form="experimentForm", rows=snippet.rows, cols=snippet.cols)
 
             div(style="display:none;")
                 input(type="hidden", name="snippetId", value=snippet.id)
