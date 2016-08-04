@@ -4,7 +4,7 @@ var readFile = require('../util/read-file');
 var lineReader = require('readline');
 
 function fromJsonFile () {
-  var languageSettings = JSON.parse(readFile(path.join(__dirname, 'languages.json')));
+  var languageSettings = JSON.parse(readFile(path.join(__dirname, 'snippets.json')));
   return _.map(languageSettings, function (languageSetting) {
     var file = path.join(__dirname, 'snippets', languageSetting.file);
     var fileContents = readFile(file);
