@@ -1,4 +1,7 @@
 extend layout
+
+include mixins/snippet
+
 block content
     .starter-template
         h1
@@ -49,12 +52,6 @@ block content
                         option(value="30-39") 30-39 hours
                         option(value="40+") 40+ hours
 
-                .form-group
-                    label(for='selectLanguage') Preferred programming language for this test
-                    select#selectLanguage.form-control(name="language")
-                        each language in languages
-                            option(value=language) #{language}
-
                 button#questionsDoneButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") To the experiment!
 
             #experiment(style="display:none;")
@@ -71,14 +68,14 @@ block content
                     button#startButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") Let's go!
 
                 #viewSnippet(style="display:none;")
-                    .code.noselect
-                        p.snippet-code.snippet-loading-message
+                    .noselect
+                        +snippet(snippet)
 
                 #inputSnippet(style="display:none;")
                     textarea#codeInput.code(name="codeInput", form="experimentForm")
 
             div(style="display:none;")
-                input.snippet-id.snippet-loading-clear-val(type="hidden", name="snippetId")
+                input(type="hidden", name="snippetId", value=snippet.id)
                 input#startViewing(type="hidden", name="startViewing")
                 input#startInput(type="hidden", name="startInput")
                 input#endInput(type="hidden", name="endInput")

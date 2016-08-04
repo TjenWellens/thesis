@@ -3,12 +3,6 @@ $(document).ready(function () {
   var viewTime = 2;
   var inputTime = 5;
 
-  // listen to changes of selected language
-  $('#selectLanguage').change(refreshCodeSnippet);
-
-  // load default language
-  refreshCodeSnippet();
-
   var state = {
     questions: startQuestions,
     explanation: startExperimentExplanation,
@@ -66,75 +60,6 @@ $(document).ready(function () {
 
   function updateCountDown (minutes, seconds) {
     $('#countdown').html('' + minutes + ':' + seconds);
-  }
-
-  //endregion
-
-  //region refreshCodeSnippet()
-  /**
-   * set loading
-   * do ajax call for snippet
-   * set snippet
-   */
-  function refreshCodeSnippet () {
-    var $code = $('#code');
-
-    // show loading message
-    snippetLoading();
-
-    // get selected language
-    var language = $('#selectLanguage').val();
-
-    // create ajax call url
-    var url = '/api/code/' + language;
-
-    // do ajax call
-    $.get(url, unwrapJsend(applySnippet));
-  }
-
-  /**
-   * Show loading message in elements with class .snippet-loading
-   */
-  function snippetLoading () {
-    $('.snippet-loading-message').html('Loading, please wait...');
-    $('.snippet-loading-clear-val').val('');
-  }
-
-  /**
-   * Set snippet content in elements that match the class
-   */
-  function applySnippet (snippet) {
-    var code = snippet.code.join('<br>');
-
-    var $code = $('.snippet-code');
-    var $id = $('.snippet-id');
-    var $inputArea = $('#codeInput');
-
-    // code fragment
-    $code.html(code);
-
-    // id
-    $id.val(snippet._id);
-
-    // rows and cols
-    $inputArea.attr('rows', snippet.rows);
-    $inputArea.attr('cols', snippet.cols);
-  }
-
-  /**
-   * success(jsend.data) if success
-   */
-  function unwrapJsend (success) {
-    return function (jsend) {
-      if (jsend.status !== 'success') {
-        console.log('Error with ajax call: ');
-        console.log(jsend);
-        alert('Problem with fetching selected language, please try again or select another language');
-        return;
-      }
-
-      success(jsend.data);
-    }
   }
 
   //endregion

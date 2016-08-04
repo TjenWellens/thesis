@@ -41,15 +41,15 @@ module.exports = function (app, config, model) {
   }
 
   function experiment (req, res, done) {
-    Code.getLanguages()
-      .then(function (languages) {
+    Code.getSnippet('javascript')
+      .then(function (snippet) {
         res.render('experiment', {
           home: config.home,
           page: 'experiment',
           title: 'Deliberate Practice Experiment',
           message: req.flash('experiment'),
           loggedIn: req.user ? true : false,
-          languages: languages || [],
+          snippet: {code: snippet.code, id: snippet.id},
           showSnippetTime: config.experiment.showSnippet.time,
           inputSnippetTime: config.experiment.inputSnippet.time,
         });
