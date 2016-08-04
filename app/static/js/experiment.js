@@ -34,6 +34,7 @@ $(document).ready(function () {
   }
 
   function startExperimentViewSnippet () {
+    $('#startViewing').val(new Date());
     $('#preExperiment').attr('style', 'display:none;');
     $('#viewSnippet').removeAttr('style');
 
@@ -44,6 +45,7 @@ $(document).ready(function () {
   }
 
   function startExperimentInputSnippet () {
+    $('#startInput').val(new Date().toISOString());
     $('#viewSnippet').attr('style', 'display:none;');
     $('#inputSnippet').removeAttr('style');
 
@@ -54,6 +56,7 @@ $(document).ready(function () {
   }
 
   function endExperiment () {
+    $('#endInput').val(new Date().toISOString());
     // disable textarea
     $('#codeInput').attr('readonly', 'readonly');
 

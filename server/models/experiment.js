@@ -3,8 +3,8 @@ module.exports = function (mongoose) {
     user: {
       id: String,
       name: String,
-      date: {type: Date, default: Date.now},
     },
+    date: {type: Date, default: Date.now},
     data: mongoose.Schema.Types.Mixed,
   }, {strict: false});
 
