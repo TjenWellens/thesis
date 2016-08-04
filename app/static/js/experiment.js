@@ -4,6 +4,8 @@ $(document).ready(function () {
   var viewTime = 3 * 60;
   var inputTime = 5 * 60;
 
+  var countdownTimer;
+
   var state = {
     questions: startQuestions,
     explanation: startExperimentExplanation,
@@ -35,7 +37,8 @@ $(document).ready(function () {
     $('#preExperiment').attr('style', 'display:none;');
     $('#viewSnippet').removeAttr('style');
 
-    new CountDownTimer(viewTime)
+    countdownTimer && countdownTimer.stop();
+    countdownTimer = new CountDownTimer(viewTime)
       .onTick(updateCountDown)
       .onEnd(state.reproduce)
       .start();
@@ -46,13 +49,16 @@ $(document).ready(function () {
     $('#viewSnippet').attr('style', 'display:none;');
     $('#inputSnippet').removeAttr('style');
 
-    new CountDownTimer(inputTime)
+    countdownTimer && countdownTimer.stop();
+    countdownTimer = new CountDownTimer(inputTime)
       .onTick(updateCountDown)
       .onEnd(state.done)
       .start();
   }
 
   function endExperiment () {
+    countdownTimer && countdownTimer.stop();
+    countdownTimer = null;
     $('#endInput').val(new Date().toISOString());
     // disable textarea
     $('#codeInput').attr('readonly', 'readonly');
@@ -83,6 +89,7 @@ $(document).ready(function () {
     this.tickFtns = [];
     this.endFtns = [];
     this.running = false;
+    this.timeoutId = null;
   }
 
   CountDownTimer.prototype.start = function () {
@@ -103,7 +110,7 @@ $(document).ready(function () {
       }, that);
 
       if (diff > 0) {
-        setTimeout(timer, that.granularity);
+        that.timeoutId = setTimeout(timer, that.granularity);
       } else {
         diff = 0;
         that.running = false;
@@ -112,6 +119,7 @@ $(document).ready(function () {
         }, that);
       }
     }());
+    return this;
   };
 
   CountDownTimer.prototype.onTick = function (ftn) {
@@ -130,6 +138,10 @@ $(document).ready(function () {
 
   CountDownTimer.prototype.expired = function () {
     return !this.running;
+  };
+
+  CountDownTimer.prototype.stop = function () {
+    clearTimeout(this.timeoutId);
   };
 
   CountDownTimer.parse = function (seconds) {
