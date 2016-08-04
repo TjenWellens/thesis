@@ -1,6 +1,6 @@
 function solve (map, start, exit) {
   if (!map[start.x][start.y]) {
-    throw 'invalid: start begins on false tile';
+    return null;
   }
   if (start.x === exit.x && start.y === exit.y) {
     return [];
