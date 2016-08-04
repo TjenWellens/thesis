@@ -33,6 +33,14 @@ block content
                         option(value="never") no programming experience
 
                 .form-group
+                    label(for='control') Please select 2
+                    select#control.form-control(name="control")
+                        option(value="0") 0
+                        option(value="1") 1
+                        option(value="2") 2
+                        option(value="3") 3
+
+                .form-group
                     label(for='education') What is your highest diploma?
                     select#education.form-control(name="education")
                         option(value="none") None
