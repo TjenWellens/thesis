@@ -1,14 +1,5 @@
 /* global $:false */
 
-function endExperiment () {
-  $('#endInput').val(new Date().toISOString());
-  // disable textarea
-  $('#codeInput').attr('readonly', 'readonly');
-
-  // post form
-  $('#experimentForm').submit();
-}
-
 $(document).ready(function () {
   var viewTime = 3 * 60;
   var inputTime = 5 * 60;
@@ -24,7 +15,8 @@ $(document).ready(function () {
   //region State Transitions
   $('#questionsDoneButton').click(state.explanation);
   $('#startButton').click(state.view);
-  $('#inputDone').click(state.endExperiment);
+  $('#viewingDone').click(state.reproduce);
+  $('#inputDone').click(state.done);
 
   function startQuestions () {
     $('#experiment').attr('style', 'display:none;');
@@ -58,6 +50,15 @@ $(document).ready(function () {
       .onTick(updateCountDown)
       .onEnd(state.done)
       .start();
+  }
+
+  function endExperiment () {
+    $('#endInput').val(new Date().toISOString());
+    // disable textarea
+    $('#codeInput').attr('readonly', 'readonly');
+
+    // post form
+    $('#experimentForm').submit();
   }
 
   function updateCountDown (minutes, seconds) {
