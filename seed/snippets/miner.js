@@ -1,8 +1,5 @@
 function solve (map, start, exit) {
-    if (!map[start.x][start.y]) {
-        return null;
-    }
-    if (start.x === exit.x && start.y === exit.y) {
+    if (start.equals(exit)) {
         return [];
     }
 
@@ -16,17 +13,13 @@ function solve (map, start, exit) {
         frontier.forEach(function (node, index) {
             frontier.splice(index, 1);
 
-            if (node.x === exit.x && node.y === exit.y) {
+            if (node.equals(exit)) {
                 path = node.getPath();
             }
 
-            node.getAdjacentNodes();
-
-            if (node.childrenNodes.length > 0) {
-                node.childrenNodes.forEach(function (n) {
-                    frontier.push(n);
-                });
-            }
+            node.getNeighbors().forEach(function (neighbor) {
+                frontier.push(neighbor);
+            });
         });
     }
 
