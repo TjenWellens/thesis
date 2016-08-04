@@ -1,23 +1,16 @@
 function solve (map, start, exit) {
-    if (start.equals(exit)) {
-        return [];
-    }
-
-    var beginNode = new Node(start.x, start.y, null);
-    beginNode.getAdjacentNodes();
-
-    var frontier = beginNode.childrenNodes;
+    var frontier = start.getNeighbors();
     var path = null;
 
     for (var x = 0; x < (map.length * map[0].length), path === null; x++) {
-        frontier.forEach(function (node, index) {
-            frontier.splice(index, 1);
+        frontier.forEach(function (tile) {
+            frontier.remove(tile);
 
-            if (node.equals(exit)) {
-                path = node.getPath();
+            if (tile.equals(exit)) {
+                path = tile.getPath();
             }
 
-            node.getNeighbors().forEach(function (neighbor) {
+            tile.getNeighbors().forEach(function (neighbor) {
                 frontier.push(neighbor);
             });
         });
