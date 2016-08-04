@@ -8,7 +8,7 @@ module.exports = function (app, config, model) {
   passport.use(createStrategy());
 
   app.get('/login/google',
-    passport.authenticate('google', {scope: []}));
+    passport.authenticate('google', {scope: ['email']}));
 
   app.get('/login/google/return',
     passport.authenticate('google', config.auth.login));
