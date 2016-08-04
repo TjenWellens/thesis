@@ -6,7 +6,7 @@ var lineReader = require('readline');
 function fromJsonFile () {
   var languageSettings = JSON.parse(readFile(path.join(__dirname, 'languages.json')));
   return _.map(languageSettings, function (languageSetting) {
-    var file = path.join(__dirname, languageSetting.file);
+    var file = path.join(__dirname, 'snippets', languageSetting.file);
     var fileContents = readFile(file);
     var code = fileContents ? fileContents.split('\n') : [];
 
