@@ -51,7 +51,7 @@ module.exports = function (app, config, model) {
   }
 
   function experiment (req, res, done) {
-    Code.getSnippet('javascript')
+    Code.getSnippet(config.experiment.snippet)
       .then(function (snippet) {
         res.render('experiment', {
           home: config.home,

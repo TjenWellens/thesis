@@ -52,6 +52,7 @@ config.auth = {
 config.experiment = {
   showSnippet: {time: '3:00', seconds: 3 * 60},
   inputSnippet: {time: '2:00', seconds: 2 * 60},
+  snippet: 'miner'
 };
 
 config.jsend = {
