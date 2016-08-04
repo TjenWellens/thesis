@@ -9,7 +9,6 @@ module.exports = function (mongoose) {
     },
     google: {
       id: String,
-      email: String,
     },
     twitter: {
       username: String,

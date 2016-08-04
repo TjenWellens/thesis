@@ -8,7 +8,7 @@ module.exports = function (app, config, model) {
   passport.use(createStrategy());
 
   app.get('/login/google',
-    passport.authenticate('google', {scope: ['email']}));
+    passport.authenticate('google'));
 
   app.get('/login/google/return',
     passport.authenticate('google', config.auth.login));
@@ -44,17 +44,8 @@ module.exports = function (app, config, model) {
             name: profile.displayName,
             google: {
               id: profile.id,
-              email: getAccountEmail(profile.emails)
             }
           });
-        }
-
-        function getAccountEmail (emails) {
-          var accountEmail = _.find(emails, function (email) {
-            return email.type === 'account';
-          });
-          var firstAccountEmailAddress = accountEmail.value;
-          return firstAccountEmailAddress;
         }
 
         function successIfUserExists (user) {
