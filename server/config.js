@@ -50,13 +50,18 @@ config.auth = {
 
 // todo: get into static/js/experiment.js
 config.experiment = {
-  showSnippet: {time: 'xx:xx', seconds: 3 * 60},
-  inputSnippet: {time: 'xx:xx', seconds: 5 * 60},
+  showSnippet: {time: 'x:xx', seconds: 3 * 60},
+  inputSnippet: {time: 'x:xx', seconds: 5 * 60},
   snippet: 'miner'
 };
 
+// also change on client!
 function formatTime (seconds) {
-  return '' + ((seconds / 60) | 0) + ':' + ((seconds % 60) | 0);
+  var minutes = ((seconds / 60) | 0);
+  var seconds = ((seconds % 60) | 0);
+  minutes = '' + minutes;
+  seconds = seconds < 10 ? '0' + seconds : '' + seconds;
+  return '' + minutes + ':' + seconds;
 }
 
 config.experiment.showSnippet.time = formatTime(config.experiment.showSnippet.seconds);

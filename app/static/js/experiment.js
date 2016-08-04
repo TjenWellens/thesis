@@ -59,7 +59,16 @@ $(document).ready(function () {
   }
 
   function updateCountDown (minutes, seconds) {
-    $('#countdown').html('' + minutes + ':' + seconds);
+    $('#countdown').html(formatTime(minutes * 60 + seconds));
+  }
+
+  // also change on server!
+  function formatTime (seconds) {
+    var minutes = ((seconds / 60) | 0);
+    var seconds = ((seconds % 60) | 0);
+    minutes = '' + minutes;
+    seconds = seconds < 10 ? '0' + seconds : '' + seconds;
+    return '' + minutes + ':' + seconds;
   }
 
   //endregion
