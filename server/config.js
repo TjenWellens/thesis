@@ -50,10 +50,17 @@ config.auth = {
 
 // todo: get into static/js/experiment.js
 config.experiment = {
-  showSnippet: {time: '3:00', seconds: 3 * 60},
-  inputSnippet: {time: '2:00', seconds: 2 * 60},
+  showSnippet: {time: 'xx:xx', seconds: 3 * 60},
+  inputSnippet: {time: 'xx:xx', seconds: 5 * 60},
   snippet: 'miner'
 };
+
+function formatTime (seconds) {
+  return '' + ((seconds / 60) | 0) + ':' + ((seconds % 60) | 0);
+}
+
+config.experiment.showSnippet.time = formatTime(config.experiment.showSnippet.seconds);
+config.experiment.inputSnippet.time = formatTime(config.experiment.inputSnippet.seconds);
 
 config.jsend = {
   errorMessages: {

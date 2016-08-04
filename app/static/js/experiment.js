@@ -1,7 +1,7 @@
 /* global $:false */
 $(document).ready(function () {
-  var viewTime = 2;
-  var inputTime = 5;
+  var viewTime = 3 * 60;
+  var inputTime = 5 * 60;
 
   var state = {
     questions: startQuestions,
