@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var models = require('../server/models/models')(mongoose);
 
 var config = require('../server/config');
-var getSnippets = require('./languages');
+var getSnippets = require('./snippets');
 
 // connect to MongoDB
 mongoose.Promise = global.Promise;
