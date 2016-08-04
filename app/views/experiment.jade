@@ -79,6 +79,7 @@ block content
 
             #inputSnippet(style="display:none;")
                 textarea#codeInput.code(name="codeInput", form="experimentForm", rows=snippet.rows, cols=snippet.cols)
+                button#inputDone.btn.btn-lg.btn-primary.btn-block(onclick="endExperiment()") I'm done!
 
         div(style="display:none;")
             input(type="hidden", name="snippetId", value=snippet.id)
