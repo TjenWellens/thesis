@@ -3,90 +3,89 @@ extend layout
 include mixins/snippet
 
 block content
-    .starter-template
-        h1
-            | Do the Experiment
-        form#experimentForm(method="POST")
-            #questions
-                p Some quick questions before the experiment begins:
+    h1
+        | Do the Experiment
+    form#experimentForm(method="POST")
+        #questions
+            p Some quick questions before the experiment begins:
 
-                .form-group
-                    label(for='since') How long since you last did any programming?
-                    select#since.form-control(name="since")
-                        option(value="recent") recently
-                        option(value="1") 1 year
-                        option(value="2") 2 years
-                        option(value="3") 3 years
-                        option(value="4-10") 4-9 years
-                        option(value="10+") 10+ years
-                        option(value="never") never programmed before
+            .form-group
+                label(for='since') How long since you last did any programming?
+                select#since.form-control(name="since")
+                    option(value="recent") recently
+                    option(value="1") 1 year
+                    option(value="2") 2 years
+                    option(value="3") 3 years
+                    option(value="4-10") 4-9 years
+                    option(value="10+") 10+ years
+                    option(value="never") never programmed before
 
-                .form-group
-                    label(for='experience') How much professional experience do you have as a programmer?
-                    select#experience.form-control(name="experience")
-                        option(value="student") I am a student
-                        option(value="1") 1 year
-                        option(value="2") 2 years
-                        option(value="3") 3 years
-                        option(value="4-10") 4-9 years
-                        option(value="10+") 10+ years
-                        option(value="never") no programming experience
+            .form-group
+                label(for='experience') How much professional experience do you have as a programmer?
+                select#experience.form-control(name="experience")
+                    option(value="student") I am a student
+                    option(value="1") 1 year
+                    option(value="2") 2 years
+                    option(value="3") 3 years
+                    option(value="4-10") 4-9 years
+                    option(value="10+") 10+ years
+                    option(value="never") no programming experience
 
-                .form-group
-                    label(for='education') What is your highest diploma?
-                    select#education.form-control(name="education")
-                        option(value="none") None
-                        option(value="student") I am a student
-                        option(value="highschool") Highschool (middelbaar)
-                        option(value="college") College (hogeschool)
-                        option(value="university") University
-                        option(value="phd") Phd (doctoraat)
+            .form-group
+                label(for='education') What is your highest diploma?
+                select#education.form-control(name="education")
+                    option(value="none") None
+                    option(value="student") I am a student
+                    option(value="highschool") Highschool (middelbaar)
+                    option(value="college") College (hogeschool)
+                    option(value="university") University
+                    option(value="phd") Phd (doctoraat)
 
-                .form-group
-                    label(for='control') Please select 2
-                    select#control.form-control(name="control")
-                        option(value="0") 0
-                        option(value="1") 1
-                        option(value="2") 2
-                        option(value="3") 3
+            .form-group
+                label(for='control') Please select 2
+                select#control.form-control(name="control")
+                    option(value="0") 0
+                    option(value="1") 1
+                    option(value="2") 2
+                    option(value="3") 3
 
-                .form-group
-                    label(for='lastWeek') How many hours did you program last week?
-                    select#lastWeek.form-control(name="lastWeek")
-                        option(value="0") 0 hours
-                        option(value="1-9") 1-9 hours
-                        option(value="10-19") 10-19 hours
-                        option(value="20-29") 20-29 hours
-                        option(value="30-39") 30-39 hours
-                        option(value="40+") 40+ hours
+            .form-group
+                label(for='lastWeek') How many hours did you program last week?
+                select#lastWeek.form-control(name="lastWeek")
+                    option(value="0") 0 hours
+                    option(value="1-9") 1-9 hours
+                    option(value="10-19") 10-19 hours
+                    option(value="20-29") 20-29 hours
+                    option(value="30-39") 30-39 hours
+                    option(value="40+") 40+ hours
 
-                button#questionsDoneButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") To the experiment!
+            button#questionsDoneButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") To the experiment!
 
-            #experiment(style="display:none;")
+        #experiment(style="display:none;")
+            p
+                | Time left:&nbsp;
+                span#countdown #{showSnippetTime}
+                | &nbsp;minutes
+
+            #preExperiment
                 p
-                    | Time left:&nbsp;
-                    span#countdown #{showSnippetTime}
-                    | &nbsp;minutes
+                    | You will see a code snippet in the language you selected
+                    | during #{showSnippetTime}. Then you will be asked to reproduce
+                    | the code snippet exactly. For this you will have #{inputSnippetTime}
+                button#startButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") Let's go!
 
-                #preExperiment
-                    p
-                        | You will see a code snippet in the language you selected
-                        | during #{showSnippetTime}. Then you will be asked to reproduce
-                        | the code snippet exactly. For this you will have #{inputSnippetTime}
-                    button#startButton.btn.btn-lg.btn-primary.btn-block(onclick="return false;") Let's go!
+            #viewSnippet(style="display:none;")
+                .noselect
+                    +snippet(snippet)
 
-                #viewSnippet(style="display:none;")
-                    .noselect
-                        +snippet(snippet)
+            #inputSnippet(style="display:none;")
+                textarea#codeInput.code(name="codeInput", form="experimentForm", rows=snippet.rows, cols=snippet.cols)
 
-                #inputSnippet(style="display:none;")
-                    textarea#codeInput.code(name="codeInput", form="experimentForm", rows=snippet.rows, cols=snippet.cols)
-
-            div(style="display:none;")
-                input(type="hidden", name="snippetId", value=snippet.id)
-                input#startViewing(type="hidden", name="startViewing")
-                input#startInput(type="hidden", name="startInput")
-                input#endInput(type="hidden", name="endInput")
+        div(style="display:none;")
+            input(type="hidden", name="snippetId", value=snippet.id)
+            input#startViewing(type="hidden", name="startViewing")
+            input#startInput(type="hidden", name="startInput")
+            input#endInput(type="hidden", name="endInput")
 
 
 

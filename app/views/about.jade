@@ -1,30 +1,32 @@
 extend layout
 block content
+    h3 What is the experiment for?
+    p
+        | This experiment is for my bachelor's thesis.
+        | The general topic of my bachelor's thesis is
+        | <b>Deliberate Practice in Software Development</b>.
+        | If you would like to read it when it's finished, please
+        | <a href="/contact">contact me</a>.
+
+    h3 How will the experiment work?
+    p
+        | When you participate in this experiment you
+        | will first be asked some questions.
+        | Next you will be shown some code. For about 2
+        | minutes. (a timer will be visible) After this
+        | is up, you will immediately start the next part
+        | where you will be tested on how well you can
+        | recall the code. This will be done by typing what
+        | you can recall in a simple text field. For this
+        | you will have about 3 minutes, after which your
+        | results will be uploaded.
+
+    h3 Who can participate?
+    p
+        | If you are a programmer, ex-programmer, on vacation,
+        | never programmed before, ...
+    p
+        | In short: <b><i>everyone's input is valued</i></b>
+
     .starter-template
-        h3 What is the experiment for?
-        p
-            | This experiment is for my bachelor's thesis.
-            | The general topic of my bachelor's thesis is
-            | <b>Deliberate Practice in Software Development</b>.
-            | If you wish to reading it, please
-            | <a href="/contact">contact me</a>.
-
-        h3 How will the experiment work?
-        p
-            | When you participate in this experiment you
-            | will first be asked some questions.
-            | Next you will be shown some code. For about 2
-            | minutes. (a timer will be visible) After this
-            | is up, you will immediately start the next part
-            | where you will be tested on how well you can
-            | recall the code. This will be done by typing what
-            | you can recall in a simple text field. For this
-            | you will have about 3 minutes, after which your
-            | results will be uploaded.
-
-        h3 Who can participate?
-        p
-            | If you are a programmer, ex-programmer, on vacation,
-            | never programmed before, ...
-        p
-            | In short: <b><i>everyone's input is valued</i></b>
+        a.btn.btn-lg.btn-primary.btn-block(href='/experiment') Go to the experiment!
