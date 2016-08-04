@@ -4,6 +4,7 @@ var auth = require('../middleware/auth-redirect-login');
 module.exports = function (app, config, model) {
   var Code = model.code;
   var Experiment = model.experiment;
+  var User = model.user;
 
   app.get('/experiment', auth, experiment);
 
@@ -11,31 +12,40 @@ module.exports = function (app, config, model) {
 
   app.get('/experiment/result', auth, showExperimentData);
 
+  app.post('/experiment/followup', auth, saveFollowup);
+
   function showExperimentData (req, res, next) {
     if (!req.user.id) return next('Authentication problem');
 
+    var data = {
+      home: config.home,
+      page: 'result',
+      title: 'Results',
+      message: req.flash('result'),
+      askForFollowUp: null,
+      loggedIn: null,
+      expected: null,
+      actual: null,
+    };
+
+    data.askForFollowUp = !req.user.followup.email;
+    data.loggedIn = !!req.user;
+
     Experiment.findOne({'user.id': req.user.id}, {}, {sort: {'date': -1}})
       .then(function (experiment) {
-        var snippetId = experiment.data.snippetId;
-        Code.findOne({_id: snippetId})
-          .then(function (snippet) {
-            if (!snippet) Promise.reject('Oops, no snippet available.');
+        if (!experiment) return Promise.reject('No experiment has been done');
 
-            var expected = {code: snippet.code};
-            var actual = {code: experiment.code};
+        data.actual = {code: experiment.code};
 
-            res.render('result', {
-              home: config.home,
-              page: 'result',
-              title: 'Results',
-              message: req.flash('result'),
-              loggedIn: req.user ? true : false,
-              language: experiment.data.language,
-              expected: expected,
-              actual: actual,
-            });
-          })
-          .catch(next);
+        return Code.findOne({_id: experiment.data.snippetId});
+      })
+      .then(function (snippet) {
+        if (!snippet) return Promise.reject('Original snippet does not exist');
+
+        data.expected = {code: snippet.code};
+      })
+      .then(function () {
+        res.render('result', data);
       })
       .catch(next);
   }
@@ -67,6 +77,23 @@ module.exports = function (app, config, model) {
 
     new Experiment(data)
       .save()
+      .then(function () {
+        res.redirect('/experiment/result');
+      })
+      .catch(done);
+  }
+
+  function saveFollowup (req, res, done) {
+    User.findOne({_id: req.user.id})
+      .then(function (user) {
+        if (!req.body.email) return Promise.reject('Empty email');
+        user.followup = {
+          email: req.body.email,
+          date: new Date().toISOString(),
+          data: req.body,
+        }
+        return user.save();
+      })
       .then(function () {
         res.redirect('/experiment/result');
       })

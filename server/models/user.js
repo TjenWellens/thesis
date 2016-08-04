@@ -3,6 +3,10 @@ module.exports = function (mongoose) {
     provider: String,
     name: String,
     registeredOn: {type: Date, default: Date.now},
+    followup: {
+      email: String,
+      date: {type: Date, default: Date.now},
+    },
     local: {
       email: String,
       password: String,
