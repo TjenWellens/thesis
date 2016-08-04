@@ -1,38 +1,6 @@
 [
   {
-    "name": "c",
-    "title": "C"
-  },
-  {
-    "name": "cplusplus",
-    "title": "C++"
-  },
-  {
-    "name": "csharp",
-    "title": "C#"
-  },
-  {
-    "name": "fsharp",
-    "title": "F#"
-  },
-  {
-    "name": "haskell",
-    "title": "Haskell"
-  },
-  {
-    "name": "java",
-    "title": "Java"
-  },
-  {
     "name": "javascript",
     "title": "JavaScript"
-  },
-  {
-    "name": "python",
-    "title": "Python"
-  },
-  {
-    "name": "ruby",
-    "title": "Ruby"
   }
 ]
