@@ -14,6 +14,8 @@ $(document).ready(function () {
     done: endExperiment,
   };
 
+  $('textarea').keydown(changeTabToSpaces);
+
   //region State Transitions
   $('#questionsDoneButton').click(state.explanation);
   $('#startButton').click(state.view);
@@ -151,4 +153,15 @@ $(document).ready(function () {
     };
   };
   //endregion
+
+  function changeTabToSpaces (e) {
+    if (e.which != 9)return;
+
+    var target = $(e.target);
+    if (!target.is('textarea')) return;
+
+    e.preventDefault();
+    var txt = target.val();
+    target.val(txt + '    ');
+  }
 });
