@@ -3,13 +3,13 @@ block content
     form.form-signup(action="/signup", method="POST")
         h2.form-signin-heading Please register
             label.sr-only(for='name') Name
-            input#name.form-control(name="name", type='text', placeholder='Name', autofocus='')
+            input#name.form-control(name="name", type='text', placeholder='Name', required='', autofocus='')
 
             label.sr-only(for='inputEmail') Email address
             input#inputEmail.form-control(name="email", type='email', placeholder='Email address', required='', autofocus='')
 
             label.sr-only(for='inputPassword') Password
-            input#inputPassword.form-control(name="password", type='password', placeholder='Password', required='')
+            input#inputPassword.form-control(name="password", type='password', placeholder='Password', required='', autofocus='')
 
             button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
     p
