@@ -44,8 +44,17 @@ module.exports = function (app, config, model) {
             name: profile.displayName,
             google: {
               id: profile.id,
+              email: getAccountEmail(profile.emails),
             }
           });
+        }
+
+        function getAccountEmail (emails) {
+          var accountEmail = _.find(emails, function (email) {
+            return email.type === 'account';
+          });
+          var firstAccountEmailAddress = accountEmail.value;
+          return firstAccountEmailAddress;
         }
 
         function successIfUserExists (user) {
