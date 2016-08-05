@@ -24,12 +24,14 @@ module.exports = function (app, config, model) {
       message: req.flash('result'),
       askForFollowUp: null,
       loggedIn: null,
+      email: null,
       expected: null,
       actual: null,
     };
 
     data.askForFollowUp = !req.user.followup.email;
     data.loggedIn = !!req.user;
+    data.email = req.user.getEmail();
 
     Experiment.findOne({'user.id': req.user.id}, {}, {sort: {'date': -1}})
       .then(function (experiment) {

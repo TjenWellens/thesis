@@ -13,7 +13,7 @@ block content
         form(action="/experiment/followup", method="POST")
             .form-group
                 label(for='email') Do you want me to send you a reminder via email?
-                input#email.form-control(name="email", type='email', placeholder='Email address', required='', autofocus='')
+                input#email.form-control(name="email", type='email', placeholder='Email address', required='', autofocus='' value=email)
             button.btn.btn-lg.btn-primary.btn-block(type='submit') Send me a reminder!
 
     h2 Results of experiment
