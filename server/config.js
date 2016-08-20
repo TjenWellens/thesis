@@ -51,7 +51,7 @@ config.auth = {
 // todo: get into static/js/experiment.js
 config.experiment = {
   showSnippet: {time: 'x:xx', seconds: 3 * 60},
-  inputSnippet: {time: 'x:xx', seconds: 5 * 60},
+  inputSnippet: {time: 'x:xx', seconds: 4 * 60},
   snippet: 'miner'
 };
 

@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
   var viewTime = 3 * 60;
-  var inputTime = 5 * 60;
+  var inputTime = 4 * 60;
 
   var countdownTimer;
 
