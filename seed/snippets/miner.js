@@ -1,20 +1,20 @@
 function solve (map, start, exit) {
     var frontier = start.getNeighbors();
-    var path = null;
 
-    for (var x = 0; x < (map.length * map[0].length), path === null; x++) {
-        frontier.forEach(function (tile) {
+    for (var i = 0; i < map.rows * map.cols; i++) {
+        for (var frontierIndex = 0; frontierIndex < frontier.length; frontierIndex++) {
+            var tile = frontier[frontierIndex];
+
             frontier.remove(tile);
 
             if (tile.equals(exit)) {
-                path = tile.getPath();
+                return tile.getPath();
             }
 
-            tile.getNeighbors().forEach(function (neighbor) {
-                frontier.push(neighbor);
-            });
-        });
+            var neighbors = tile.getNeighbors();
+            frontier = frontier.concat(neighbors);
+        }
     }
 
-    return path;
+    return null;
 }
