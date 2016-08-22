@@ -2,6 +2,10 @@ extend layout
 block content
     form.form-signin(action="/login", method="POST")
         h2.form-signin-heading Please sign in
+        p Please let me know who you are, this way I know you are not a spam-bot.
+        p I will not share this email address with others.
+        p Alternatively, you can sign in with your twitter or google account.
+
         .form-group
             label(for='inputEmail') Email address
             input#inputEmail.form-control(name="email", type='email', placeholder='Email address', required='', autofocus='')

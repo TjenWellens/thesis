@@ -2,6 +2,10 @@ extend layout
 block content
     form.form-signup(action="/signup", method="POST")
         h2.form-signin-heading Please register
+        p Please let me know who you are, this way I know you are not a spam-bot.
+        p I will not share this email address with others.
+        p Alternatively, you can sign in with your twitter or google account.
+
         .form-group
             label(for='name') Name
             input#name.form-control(name="name", type='text', placeholder='Name', required='', autofocus='')
