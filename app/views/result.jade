@@ -3,18 +3,14 @@ extend layout
 include mixins/snippet
 
 block content
-    if askForFollowUp
-        h2 Follow up experiment
-        p
-            | Now that you've finished the experiment, I can tell
-            | you about the follow-up experiment. It's the same
-            | as this experiment but one week from today.
-
-        form(action="/experiment/followup", method="POST")
-            .form-group
-                label(for='email') Do you want me to send you a reminder via email?
-                input#email.form-control(name="email", type='email', placeholder='Email address', required='', autofocus='' value=email)
-            button.btn.btn-lg.btn-primary.btn-block(type='submit') Send me a reminder!
+    h2 Thank you!
+    p
+        | Thank you for participating in this experiment!
+        | Below you can see the original code snippet and what you recalled.
+    p
+        | There is no score at the moment, because there are
+        | many different ways to calculate the score. And I have not
+        | yet decided which way is most applicable.
 
     h2 Results of experiment
     h3 Original:
