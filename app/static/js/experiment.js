@@ -14,7 +14,7 @@ $(document).ready(function () {
     done: endExperiment,
   };
 
-  $('textarea').keydown(changeTabToSpaces);
+  $(document).delegate('textarea', 'keydown', changeTabToSpaces);
 
   //region State Transitions
   $('#questionsDoneButton').click(state.explanation);
@@ -155,13 +155,33 @@ $(document).ready(function () {
   //endregion
 
   function changeTabToSpaces (e) {
-    if (e.which != 9)return;
+    var keyCode = e.keyCode || e.which;
 
-    var target = $(e.target);
-    if (!target.is('textarea')) return;
+    if (keyCode != 9) return;
+
+    var $textarea = $(this);
+    if (!$textarea.is('textarea')) {
+      console.log('target not a textarea');
+      return;
+    }
 
     e.preventDefault();
-    var txt = target.val();
-    target.val(txt + '    ');
+
+    var text = $textarea.val();
+
+    var value = '    ';
+    var start = $(this).get(0).selectionStart;
+    var end = $(this).get(0).selectionEnd;
+
+    // set textarea value to: text before caret + tab + text after caret
+    $textarea.val(
+      text.substring(0, start)
+      + value
+      + text.substring(end)
+    );
+
+    // put caret at right position again
+    $(this).get(0).selectionStart = start + value.length;
+    $(this).get(0).selectionEnd = start + value.length;
   }
 });
