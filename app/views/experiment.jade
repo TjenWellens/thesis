@@ -71,6 +71,11 @@ block content
                     | When you continue you will see a code snippet. You will have #{showSnippetTime} minutes
                     | to memorize that snippet. Then you will be asked to reproduce that code snippet
                     | exactly. For this you will have #{inputSnippetTime} minutes.
+                p
+                    | When the countdown is over, you will automatically
+                    | continue to the next step. In each step you will
+                    | also have a button to skip the rest of the countdown
+                    | and immediately go to the next step.
                 button#startButton.btn.btn-lg.btn-primary.btn-block(type='button') Let's go!
 
             #viewSnippet(style="display:none;")
