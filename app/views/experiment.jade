@@ -62,10 +62,6 @@ block content
             button#questionsDoneButton.btn.btn-lg.btn-primary.btn-block(type='button') To the experiment!
 
         #experiment(style="display:none;")
-            p
-                | Time left:&nbsp;
-                span#countdown #{showSnippetTime}
-                | &nbsp;minutes
 
             #preExperiment
                 ul
@@ -73,19 +69,29 @@ block content
                         | In the first step you see the code fragment.
                         | You will have #{showSnippetTime} minutes memorize the code fragment.
                     li
-                        | After #{showSnippetTime} minutes (or when you skip the countdown),
-                        | you got to a page with an empty textfield. Here you will have #{inputSnippetTime} minutes
-                        | to type in as much as you can remember.
+                        | After the time is up or when you skip the countdown,
+                        | you will see a new page with an empty textfield.
+                        | <br>
+                        | Here you will have #{inputSnippetTime} minutes
+                        | to type in as much as you can remember from the code fragment.
                 p Note: you can not return to previous steps.
 
                 button#startButton.btn.btn-lg.btn-primary.btn-block(type='button') Let's go!
 
             #viewSnippet(style="display:none;")
+                p
+                    | Time left:&nbsp;
+                    span.countdown #{showSnippetTime}
+                    | &nbsp;minutes
                 .noselect
                     +snippet(snippet)
                 button#viewingDone.btn.btn-lg.btn-primary.btn-block(type='button') Skip countdown!
 
             #inputSnippet(style="display:none;")
+                p
+                    | Time left:&nbsp;
+                    span.countdown #{showSnippetTime}
+                    | &nbsp;minutes
                 textarea#codeInput.code(name="codeInput", form="experimentForm", rows=snippet.rows, cols=snippet.cols)
                 button#inputDone.btn.btn-lg.btn-primary.btn-block(type='button') I'm done!
 

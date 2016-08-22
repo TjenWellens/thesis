@@ -70,7 +70,7 @@ $(document).ready(function () {
   }
 
   function updateCountDown (minutes, seconds) {
-    $('#countdown').html(formatTime(minutes * 60 + seconds));
+    $('.countdown').html(formatTime(minutes * 60 + seconds));
   }
 
   // also change on server!
