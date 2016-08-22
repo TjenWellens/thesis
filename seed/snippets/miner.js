@@ -7,8 +7,8 @@ function solve (map, start, exit) {
     }
     var frontier = start.getNeighbors();
     for (var i = 0; i < map.rows * map.cols; i++) {
-        for (var frontierIndex = 0; frontierIndex < frontier.length; frontierIndex++) {
-            var tile = frontier[frontierIndex];
+        for (var j = 0; j < frontier.length; j++) {
+            var tile = frontier[j];
             frontier.remove(tile);
             if (tile.equals(exit)) {
                 return tile.getPath();
