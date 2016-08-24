@@ -1,4 +1,5 @@
-use experiment;
+use
+experi
 
 var Code = db.codes;
 var Experiment = db.experiments;
@@ -61,16 +62,17 @@ function mapQuestions (data) {
   };
 }
 
-function updateExperimentScores (row) {
+Experiment.find().forEach(function (row) {
+  var scores = calculateScores(code, row.code);
+  var questions = mapQuestions(row.data);
+
   Experiment.update(
     {_id: row._id},
     {
       '$set': {
-        scores: calculateScores(code, row.code),
-        questions: mapQuestions(row.data)
+        scores: scores,
+        questions: questions
       }
     }
   );
-}
-
-Experiment.find().forEach(updateExperimentScores);
+});
