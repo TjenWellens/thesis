@@ -1,42 +1,7 @@
-use
-experi
-
 var Code = db.codes;
 var Experiment = db.experiments;
 
 var code = Code.findOne({language: 'miner'}).code;
-
-function calculateScores (expected, actual) {
-  var scores = {
-    exact: 0,
-    ignoreWhitespace: 0,
-    ignoreOrder: 0,
-    ignoreOrderWhitespace: 0,
-  };
-
-  // exact
-  expected.forEach(function (element, index, array) {
-    if (index >= actual.length) return;
-    if (actual[index] !== element) return;
-
-    scores.exact++;
-  });
-
-  var whitespace = / /g;
-  // ignoreWhitespace
-  expected.forEach(function (element, index, array) {
-    if (index >= actual.length) return;
-
-
-    var expectedLine = element.replace(whitespace, '');
-    var actualLine = actual[index].replace(whitespace, '');
-    if (expectedLine !== actualLine) return;
-
-    scores.ignoreWhitespace++;
-  });
-
-  return scores;
-}
 
 var map = {
   since: {},
@@ -53,19 +18,46 @@ var map = {
   lastweek: {},
 };
 
-function mapQuestions (data) {
-  return {
-    since: map.since[data.since],
-    experience: map.experience[data.experience],
-    education: map.education[data.education],
-    lastweek: map.lastweek[data.lastWeek],
-  };
-}
-
 Experiment.find().forEach(function (row) {
-  var scores = calculateScores(code, row.code);
-  var questions = mapQuestions(row.data);
 
+  // calc scores
+  var scores = {
+    exact: 0,
+    ignoreWhitespace: 0,
+    ignoreOrder: 0,
+    ignoreOrderWhitespace: 0,
+  };
+
+  // exact
+  expected.forEach(function (element, index, array) {
+    if (index >= row.code.length) return;
+    if (row.code[index] !== element) return;
+
+    scores.exact++;
+  });
+
+  var whitespace = / /g;
+  // ignoreWhitespace
+  expected.forEach(function (element, index, array) {
+    if (index >= row.code.length) return;
+
+
+    var expectedLine = element.replace(whitespace, '');
+    var actualLine = row.code[index].replace(whitespace, '');
+    if (expectedLine !== actualLine) return;
+
+    scores.ignoreWhitespace++;
+  });
+
+  // map questions
+  var questions = {
+    since: map.since[row.data.since],
+    experience: map.experience[row.data.experience],
+    education: map.education[row.data.education],
+    lastweek: map.lastweek[row.data.lastWeek],
+  };
+
+  // update in db
   Experiment.update(
     {_id: row._id},
     {
