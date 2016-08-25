@@ -53,33 +53,33 @@ print('working');
 db.experiments.find().forEach(function (row) {
   var nonWhiteCharacters = row.data.codeInput.replace(whitespace, '').length
 
-  // // calc scores
-  // var scores = {
-  //   exact: 0,
-  //   ignoreWhitespace: 0,
-  //   ignoreOrder: 0,
-  //   ignoreOrderWhitespace: 0
-  // };
-  //
-  // for (var i = 0; i < code.length; i++) {
-  //   var element = code[i];
-  //
-  //   if (i >= row.code.length) {
-  //     continue;
-  //   }
-  //
-  //   // exact
-  //   if (row.code[i] === element) {
-  //     scores.exact++;
-  //   }
-  //
-  //   // ignoreWhitespace
-  //   var expectedLine = element.replace(whitespace, '');
-  //   var actualLine = row.code[i].replace(whitespace, '');
-  //   if (expectedLine === actualLine) {
-  //     scores.ignoreWhitespace++;
-  //   }
-  // }
+  // calc scores
+  var scores = {
+    exact: 0,
+    ignoreWhitespace: 0,
+    ignoreOrder: 0,
+    ignoreOrderWhitespace: 0
+  };
+
+  for (var i = 0; i < code.length; i++) {
+    var element = code[i];
+
+    if (i >= row.code.length) {
+      continue;
+    }
+
+    // exact
+    if (row.code[i] === element) {
+      scores.exact++;
+    }
+
+    // ignoreWhitespace
+    var expectedLine = element.replace(whitespace, '');
+    var actualLine = row.code[i].replace(whitespace, '');
+    if (expectedLine === actualLine) {
+      scores.ignoreWhitespace++;
+    }
+  }
 
   // map questions
   var questions = {
