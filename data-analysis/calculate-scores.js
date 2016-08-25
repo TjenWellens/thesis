@@ -1,7 +1,4 @@
-var code = db.codes.findOne({language: 'miner'}).code;
-
-db.bcp.drop();
-db.experiments.copyTo("bcp");
+var whitespace = /\s/g;
 
 var map = {
   since: {
@@ -47,9 +44,13 @@ var map = {
   }
 };
 
-var whitespace = /\s/g;
+var code = db.codes.findOne({language: 'miner'}).code;
+var codeNonWhiteCharacters = code.join('').replace(whitespace, '').length
+print('code nonWhiteCharacters: ' + codeNonWhiteCharacters);
+print('code lines: ' + code.length);
 
-print('working');
+db.bcp.drop();
+db.experiments.copyTo("bcp");
 
 function calcScore (row) {
   var scores = {
