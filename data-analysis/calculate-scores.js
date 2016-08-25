@@ -1,5 +1,8 @@
 var code = db.codes.findOne({language: 'miner'}).code;
 
+db.bcp.drop();
+db.experiments.copyTo("bcp");
+
 var map = {
   since: {
     EMPTY: -1,
@@ -45,8 +48,6 @@ var map = {
 };
 
 var whitespace = /\s/g;
-
-var cursor = db.experiments.find();
 
 print('working');
 
@@ -113,7 +114,7 @@ function mapQuestions (row) {
   return questions;
 }
 
-db.experiments.find().forEach(function (row) {
+db.bcp.find().forEach(function (row) {
   var nonWhiteCharacters = row.data.codeInput.replace(whitespace, '').length
 
   // calc scores
@@ -122,7 +123,7 @@ db.experiments.find().forEach(function (row) {
   var questions = mapQuestions(row);
 
   // update in db
-  db.experiments.update(
+  db.bcp.update(
     {_id: row._id},
     {
       '$set': {
