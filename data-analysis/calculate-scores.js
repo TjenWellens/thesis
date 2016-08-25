@@ -86,14 +86,14 @@ function calcScore (row) {
     }
 
     // ignore order
-    var index = codeNoOrder.indexOf(actualLine);
+    var index = codeNoOrder.indexOf(element);
     if (index >= 0) {
       scores.ignoreOrder++;
       codeNoOrder[index] = null;
     }
 
     // ignore order + whitespace
-    var index = codeNoOrderNoWhitespace.indexOf(actualLine);
+    var index = codeNoOrderNoWhitespace.indexOf(expectedLine);
     if (index >= 0) {
       scores.ignoreOrderWhitespace++;
       codeNoOrderNoWhitespace[index] = null;
