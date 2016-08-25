@@ -52,14 +52,6 @@ print('working');
 
 db.experiments.find().forEach(function (row) {
   var nonWhiteCharacters = row.data.codeInput.replace(whitespace, '').length
-  var codeNoOrder = [];
-  var codeNoOrderNoWhitespace = [];
-
-  // add lines without whitespace
-  for (var i = 0; i < row.code.length; i++) {
-    codeNoOrder[i] = row.code[i];
-    codeNoOrderNoWhitespace[i] = row.code[i].replace(whitespace, '');
-  }
 
   // calc scores
   var scores = {
@@ -68,6 +60,14 @@ db.experiments.find().forEach(function (row) {
     ignoreOrder: 0,
     ignoreOrderWhitespace: 0
   };
+  var codeNoOrder = [];
+  var codeNoOrderNoWhitespace = [];
+
+  // add lines without whitespace
+  for (var i = 0; i < row.code.length; i++) {
+    codeNoOrder[i] = row.code[i];
+    codeNoOrderNoWhitespace[i] = row.code[i].replace(whitespace, '');
+  }
 
   for (var i = 0; i < code.length; i++) {
     var element = code[i];
