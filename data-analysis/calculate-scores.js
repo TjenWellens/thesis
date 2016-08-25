@@ -50,10 +50,7 @@ var cursor = db.experiments.find();
 
 print('working');
 
-db.experiments.find().forEach(function (row) {
-  var nonWhiteCharacters = row.data.codeInput.replace(whitespace, '').length
-
-  // calc scores
+function calcScore (row) {
   var scores = {
     exact: 0,
     ignoreWhitespace: 0,
@@ -102,14 +99,27 @@ db.experiments.find().forEach(function (row) {
       codeNoOrderNoWhitespace[index] = null;
     }
   }
+  return scores;
+}
 
-  // map questions
+function mapQuestions (row) {
+// map questions
   var questions = {
     since: map.since[row.data.since],
     experience: map.experience[row.data.experience],
     education: map.education[row.data.education],
     lastweek: map.lastweek[row.data.lastWeek]
   };
+  return questions;
+}
+
+db.experiments.find().forEach(function (row) {
+  var nonWhiteCharacters = row.data.codeInput.replace(whitespace, '').length
+
+  // calc scores
+  var scores = calcScore(row);
+
+  var questions = mapQuestions(row);
 
   // update in db
   db.experiments.update(
