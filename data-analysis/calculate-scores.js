@@ -51,7 +51,16 @@ var cursor = db.experiments.find();
 print('working');
 
 db.experiments.find().forEach(function (row) {
+  var i;
   var nonWhiteCharacters = row.data.codeInput.replace(whitespace, '').length
+  var codeNoOrder = [];
+  var codeNoOrderNoWhitespace = [];
+
+  // add lines without whitespace
+  for (i = 0; i < row.code.length; i++) {
+    codeNoOrder[i] = row.code[i];
+    codeNoOrderNoWhitespace[i] = row.code[i].replace(whitespace, '');
+  }
 
   // calc scores
   var scores = {
@@ -61,7 +70,7 @@ db.experiments.find().forEach(function (row) {
     ignoreOrderWhitespace: 0
   };
 
-  for (var i = 0; i < code.length; i++) {
+  for (i = 0; i < code.length; i++) {
     var element = code[i];
 
     if (i >= row.code.length) {
@@ -79,6 +88,20 @@ db.experiments.find().forEach(function (row) {
     if (expectedLine === actualLine) {
       scores.ignoreWhitespace++;
     }
+
+    // ignore order
+    var index = codeNoOrder.indexOf(actualLine);
+    if (index >= 0) {
+      scores.ignoreOrder++;
+      codeNoOrder[index] = null;
+    }
+
+    // ignore order + whitespace
+    var index = codeNoOrderNoWhitespace.indexOf(actualLine);
+    if (index >= 0) {
+      scores.ignoreOrderWhitespace++;
+      codeNoOrderNoWhitespace[index] = null;
+    }
   }
 
   // map questions
@@ -94,7 +117,7 @@ db.experiments.find().forEach(function (row) {
     {_id: row._id},
     {
       '$set': {
-        // scores: scores,
+        scores: scores,
         questions: questions,
         nonWhiteCharacters: nonWhiteCharacters
       }
