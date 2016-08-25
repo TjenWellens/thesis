@@ -51,13 +51,12 @@ var cursor = db.experiments.find();
 print('working');
 
 db.experiments.find().forEach(function (row) {
-  var i;
   var nonWhiteCharacters = row.data.codeInput.replace(whitespace, '').length
   var codeNoOrder = [];
   var codeNoOrderNoWhitespace = [];
 
   // add lines without whitespace
-  for (i = 0; i < row.code.length; i++) {
+  for (var i = 0; i < row.code.length; i++) {
     codeNoOrder[i] = row.code[i];
     codeNoOrderNoWhitespace[i] = row.code[i].replace(whitespace, '');
   }
@@ -70,7 +69,7 @@ db.experiments.find().forEach(function (row) {
     ignoreOrderWhitespace: 0
   };
 
-  for (i = 0; i < code.length; i++) {
+  for (var i = 0; i < code.length; i++) {
     var element = code[i];
 
     if (i >= row.code.length) {
