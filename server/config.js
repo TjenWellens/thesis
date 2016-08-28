@@ -97,6 +97,17 @@ config.mail = {
   }
 }
 
+config.score = {
+  whitespace: /\s/g,
+  expectedScores: {
+    exact: 21,
+    ignoreWhitespace: 21,
+    ignoreOrder: 21,
+    ignoreOrderWhitespace: 21,
+    nonWhiteCharacters: 393,
+  }
+}
+
 config.questions = {};
 
 config.questions.mapKeys = {
