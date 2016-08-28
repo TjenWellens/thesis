@@ -1,10 +1,13 @@
 var _ = require('underscore');
 var auth = require('../middleware/auth-redirect-login');
+var calculateScoresUtil = require('../../util/calculate-scores');
 
 module.exports = function (app, config, model) {
   var Code = model.code;
   var Experiment = model.experiment;
   var User = model.user;
+
+  var calculateScores = calculateScoresUtil(config.score);
 
   app.get('/experiment', auth, experiment);
 
@@ -27,6 +30,7 @@ module.exports = function (app, config, model) {
       email: null,
       expected: null,
       actual: null,
+      scores: [],
     };
 
     // data.askForFollowUp = !req.user.followup.email;
@@ -45,6 +49,27 @@ module.exports = function (app, config, model) {
         if (!snippet) return Promise.reject('Original snippet does not exist');
 
         data.expected = {code: snippet.code};
+      })
+      .then(function () {
+        var scoreTypes = {
+          exact: 'line matches + exact position',
+          ignoreOrder: 'line matches + ignore position',
+          ignoreWhitespace: 'ignore whitespace + exact position',
+          ignoreOrderWhitespace:'ignore whitespace + ignore position',
+          nonWhiteCharacters: 'characters (excluding whitespace)',
+        };
+
+        var expected = config.score.expectedScores;
+        var actual = calculateScores(data.expected.code, data.actual.code);
+
+        for(var key in scoreTypes) {
+          data.scores.push({
+            type: scoreTypes[key],
+            actual: actual[key],
+            expected: expected[key],
+            percent: Math.ceil(100 * actual[key] / expected[key]),
+          });
+        }
       })
       .then(function () {
         res.render('result', data);

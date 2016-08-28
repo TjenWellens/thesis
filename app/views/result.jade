@@ -22,3 +22,19 @@ block content
     h3 Your input:
     +snippet(actual)
 
+    h3 Scores:
+    table.table.table-striped
+        thead
+            tr
+                th Type
+                th Actual
+                th Expected
+                th %
+        tbody
+            each score in scores
+                tr
+                    td #{score.type}
+                    td #{score.actual}
+                    td #{score.expected}
+                    td #{score.percent}
+
