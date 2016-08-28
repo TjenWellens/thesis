@@ -97,4 +97,57 @@ config.mail = {
   }
 }
 
+config.questions = {};
+
+config.questions.mapKeys = {
+  since: 'since',
+  experience: 'experience',
+  education: 'education',
+  lastWeek: 'lastweek',
+}
+
+config.questions.mapValues = {
+  since: {
+    EMPTY: -1,
+    '1w': 8,
+    '1m': 7,
+    '6m': 6,
+    '1y': 5,
+    '2y': 4,
+    '3y': 3,
+    '10y': 2,
+    '10+y': 1,
+    'never': 0,
+  },
+  experience: {
+    EMPTY: -1,
+    never: 0,
+    student: 1,
+    '0-1': 2,
+    '1': 3,
+    '2': 4,
+    '3': 5,
+    '4-10': 6,
+    '10+': 7,
+  },
+  education: {
+    EMPTY: -1,
+    none: 0,
+    student: 1,
+    highschool: 2,
+    college: 3,
+    university: 4,
+    phd: 5,
+  },
+  lastWeek: {
+    EMPTY: -1,
+    '0': 0,
+    '1-9': 1,
+    '10-19': 2,
+    '20-29': 3,
+    '30-39': 4,
+    '40+': 5,
+  }
+};
+
 module.exports = config;
