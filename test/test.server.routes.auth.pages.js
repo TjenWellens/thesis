@@ -11,17 +11,17 @@ describe('pages when not authenticated', function () {
     var paths = [
       '/experiment',
       '/user',
-      '/user/experiment',
+      '/experiment/result',
     ];
 
     _.each(paths, getPathShouldRedirectToLogin);
 
     function getPathShouldRedirectToLogin (path) {
-      it(path + ' should redirect to /login', function (done) {
+      it(path + ' should redirect to /signup', function (done) {
         supertest(app)
           .get(path)
           .expect(302)
-          .expect('Location', '/login')
+          .expect('Location', '/signup')
           .end(done);
       });
     }
@@ -35,11 +35,11 @@ describe('pages when not authenticated', function () {
     _.each(paths, postPathShouldRedirectToLogin);
 
     function postPathShouldRedirectToLogin (path) {
-      it(path + ' should redirect to /login', function (done) {
+      it(path + ' should redirect to /signup', function (done) {
         supertest(app)
           .post(path)
           .expect(302)
-          .expect('Location', '/login')
+          .expect('Location', '/signup')
           .end(done);
       });
     }
@@ -73,7 +73,7 @@ describe('pages when authenticated', function () {
     var routes = [
       '/experiment',
       '/user',
-      '/user/experiment',
+      '/experiment/result',
     ];
 
     _.each(routes, getRouteShould200);
@@ -96,11 +96,11 @@ describe('pages when authenticated', function () {
     _.each(paths, postPathShouldRedirectToExperimentData);
 
     function postPathShouldRedirectToExperimentData (path) {
-      it(path + ' should redirect to /user/experiment', function (done) {
+      it(path + ' should redirect to /experiment/result', function (done) {
         agent
           .post(path)
           .expect(302)
-          .expect('Location', '/user/experiment')
+          .expect('Location', '/experiment/result')
           .end(done);
       });
     }

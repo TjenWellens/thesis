@@ -29,7 +29,7 @@ module.exports = function (app, config, model) {
       actual: null,
     };
 
-    data.askForFollowUp = !req.user.followup.email;
+    // data.askForFollowUp = !req.user.followup.email;
     data.loggedIn = !!req.user;
     data.email = req.user.getEmail();
 
